@@ -1,0 +1,122 @@
+----详细的----
+非关系型数据库存储
+PyMongo的存储:pip install pymong
+
+1.连接数据库
+import pymongo
+client = pymongo.MongoClient(host="localhost",port=27017)
+等价于 client = MongoClient("mongo://localhost:27017/)
+
+2.操作数据库
+1.创建一个数据库:db = client.test == db = client['test']
+2.生成集合集合(collection)对象:collection = db.students == collection = db['students']
+    注意MongoDB可以建立多个数据库,而数据库又可以生成多个集合...
+3.调用collection的insert方法即可插入数据:
+    insert_one:
+        student = {
+            'id':'123456'
+        }
+        result = collection.insert_one(student)
+    inset_many:
+        注意:多条数据的插入需要以列表来传递
+        student1 = {
+            'id':123456,
+            'id':456789,
+            'name':'lxh'
+        }
+        student2 = {
+            'id':654321,
+            'id':987654,
+            'name':'lxx'
+        }
+        student_list = [student1,student2]
+        result = collection.insert_many(student_list)
+
+    用这种最新的插入方法可以取出其ObjectId值:print(result.inserted_ids)
+4.查询:
+利用find_one或find方法进行查询:
+    find_one(拿来查询有无某个数据):
+        result = collection.find_one({'id':'123456'})
+        print(type(result))
+        print(result)
+        也可以根据ObjectId来查询
+
+        #find_one查询得到的是单个结果
+    find(拿来查找有无这一部分的数据):
+        results = collection.find({'id':123456})
+        print(results)
+        for result in results:
+            print(result)
+
+    如果要查询大于123456的数据:results = collection.find({'id':{'$gt':123456}})
+        results = collection.find({'id':{'$gt':123456}})
+        for result in results:
+            print(result)
+    $lt--小于         {'age':{'$lt':20}}        表示age大于20的...
+    $gt--大于         {'age':{'$gt':20}}        表示age小于20的...
+    $lte--小于或等于   {'age':{'$lte':20}}       表示age大于或等于20的...
+    $gte--大于或等于   {'age':{'$gte':20}}       表示age小于或等于20的...
+    $ne--不等于       {'age':{' $ne':20}}       表示age不等于20的...
+    $in--在范围内     {'age':{'$in':[20,23]}}    表示age在20,23这个范围的
+    $nin--不在范围内   {'age':{'$lt':[20,23]}}   表示age不在这个范围的
+
+正则匹配查询:$regex来指定正则匹配
+    results = collection.find({'$regex':'M.*'})
+    查找以M为开头的字符串
+
+    $regex--匹配正则表达式
+    $exists--属性是否存在 {'name':{'$exists':True}} name属性存在
+    $type--类型判断
+    $mod--数字模操作
+    $text--文字查询 {'$text':{'$search:'Mike'}} text类型的属性中包含Mike字符串
+    $where--高级条件查询
+
+5.计数:调用count方法统计查询结果有多少条数据
+    count = collection.find().count()
+    print(count)
+
+    统计符合某个条件的数据
+    count = collection.find({'age':20}).count()
+    print(count)
+
+6.排序:排序时可以调用sort方法,并在其中传入排序的字段及升降序标志
+    升序
+    result = collection.find().sort('id',pymongo.ASCENDING)
+    print([result['name']] for result in results)
+    降序
+    result = collection.find().sort('id',pymongo.DESCENDING)
+    print([result['name']] for result in results)
+7.偏移:skip(),limit()
+
+8.更新:update_one  update_many
+
+9.删除:delete_one  delete_many
+
+其他操作:
+    find_one_and_delete 查找后删除
+    find_one_and_replace 替换
+    find_one_and_update 更新操作
+对索引进行操作相关方法有:
+    creat_index
+    creat_indexes
+    drop_index
+
+关系型数据库存储
+    MySQL的储存：pip install pymysql
+
+    1.利用pymysql连接mysql，然后创建一个新的数据库，name为spiders
+        具体步骤应为：下载mysql-->pip install pysql-->连接服务器
+        import pymysql
+
+        database = pymysql.connect(host='localhost',user='root',password='aini3333nian.',port=3306) #连接服务器
+        cursor = database.cursor() #调用cursor()方法获得mysql操作游标
+        cursor.execute("SELECT VERSION()") #利用游标来执行sql语句
+        data = cursor.fetchone() #调用fetchone()方法获得第一条数据，也就是获得“SELECT VERSION()”
+        print('Database version:',data) #将data打印出来
+        cursor.execute("CREATE DATABASE spiders DEFAULT CHARACTER SET utf8") #这个执行创建名为spiders的数据库 的操作
+        db.close()
+
+    2.创建表:
+
+
+    MYSQL是系统性学习,mongo只要会存取数据即可

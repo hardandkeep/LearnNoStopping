@@ -1,0 +1,55 @@
+BS4:
+BeautifulSoup4将复杂的HTML文档转换成一个复杂的树形结构，每个节点都是python对象，所有对象可以归纳为4种：
+
+-Tag
+-NavigableString
+-BeautifulSoup
+-Comment
+
+from bs4 import BeautifulSoup
+import lxml
+import requests
+BeautifulSoup4的实例化
+
+  1.将本地的html文本数据加载到该对象中
+  fp = open('./html.txt','r',encoding='utf-8')
+  soup = BeautifulSoup(fp,'lxml')
+  
+  2.将互联网上获取的页面源码加载到该对象中
+  page_text = response.text
+  soup = BeautifulSoup(page_text,'lxml')
+
+  3.提供一些属性用于解析数据的方法和属性
+  利用上面实例完的soup
+  （1.）soup.标签名称（TagName）即可获得相应的标签以及标签内的内容，
+  例如soup.a会返回第一个a标签......soup.a/div/p......
+  （2.）find()的用法
+    -find('TagName')==soup.TagName
+    -属性定位：根据属性有针对性的选择我想要的标签，soup.find(TagName,class_/id/attr/...='属性')
+    -soup.find_all('TagName')能找到符合要求的所有的标签,会返回一个列表
+    -select()方法：
+     1.select('某种选择器:id/class/标签...选择器)
+      例如：<div class="tang">......<div>
+      select('.tang')会把上述那个标签里面的内容全部转化为对象以供提取
+     2.利用select()来层级定位，一层一层的去定位。
+      例如：定位这段页面代码中的第一个a标签，即soup.select('.tang > ul > li > a')，然后返回列表，输出第一个即可
+      亦可以-soup.select('.tang > ul a'),即>表示一个层级，空格表示多个层级，上句话里说还要返回列表才能输出第一个
+      更方便的返回第一个a：soup.select('.tang > ul > li > a')[0] or soup.select('.tang > ul a')[0]即可
+      <div class="tang">
+        <ul>
+          <li><a...> ......<a><li>
+          <li><a...> ......<a><li>
+          <li><a...> ......<a><li>
+          <li><a...> ......<a><li>
+          <li><a...> ......<a><li>
+        <ul>
+      <div>
+    -获取标签之间的文本数据：
+      soup.a.text/string/get_text()
+      text/get_text():可以获取某一个标签中所有的文本内容
+      string:只可以获取该标签下面直系的文本内容
+    -获取标签中属性值
+      soup.a['href']
+      
+
+

@@ -1,0 +1,14 @@
+#耗费资源比较大，不建议使用
+
+from multprocessing import Process
+
+def func():
+      for i in range(1000):
+      print('func',i)
+if __init__ == "__main__":
+
+      p = Process(target=func)
+      p.start()
+
+      for i in range(1000):
+          print("main",i)

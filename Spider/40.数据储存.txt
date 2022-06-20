@@ -1,0 +1,108 @@
+#text，json，csv，Mongodb
+
+text两种,我就记录我比较喜欢的：
+
+    with open('./这是一个text储存示例不要运行','w',encoding='utf-8') as fp:
+        fp.write()
+        #......的操作
+
+
+json的操作
+
+    import requests
+    import json
+    if __name__ == '__main__':
+        url = "https://movie.douban.com/j/chart/top_list"
+        param = {
+            'type': '11',
+            'interval_id': '100:90',
+            'action':'',
+            'start': '0',
+            'limit': '20'
+        }
+        headers = {
+            'User-Agent': 'Mozilla/5.0'
+        }
+        req = requests.get(url=url,params=param,headers=headers)
+        list_json = req.json()
+
+        fp = open('./douban.json','w',encoding='utf-8')
+        json.dump(list_json,fp=fp,ensure_ascii=False)
+
+
+csv的储存：
+    #写入操作
+        import csv
+        with open('text.csv','w',encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow()
+            writer.writerows()
+
+    #读取操作
+        with open('text.csv','r',encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                print(row)
+    
+
+MongoDB:
+-------------------基本命令和增删查改-------------------
+-基本命令:
+在mongodb终端输入help可查看基本操作命令,下面记一些常用的
+            查看当前数据库:db
+            查看所有数据库:show dbs /show database
+            切换数据库:use db name
+            删除当前数据库:db.dropDatabase()
+            切换/创建数据库:use db_name
+
+            创建集合:db.createCollection(集合名, [options])    options有三个可选参数
+            查看集合:show collections
+            删除集合:db.集合名.drop()
+
+            查看数据库下面的集合:show collections
+            增删查改集合里的数据:db.集合名.insert({})
+                             /db.集合名.remove(query,justOne)第一个参数为删除条件,第二个条件默认情况为false删除多条,true/1时删除一条
+                             /db.集合名.find({}) 后面会有高级查询
+                             /db.集合名.update({"name":"test1005"},{$set:{"name":"new_test1005"}})-更新一条
+                              db.集合名.update({"name":"test1005"},{$set:{"name":"new_test1005"}},{multi:true})-更新全部
+
+
+-Python交互:增删查改:
+from pymongo import MongoClient
+
+#实例化client,建立连接
+client = MongoClient(host="localhost",port=27017)
+#创建了一个库,又在库里面创建了一个集合
+collection = client["test"]["t251"]
+
+-增:
+    #插入一条数据
+    collection.insert_one({"id":1001,"name":"xiaoming"})
+
+    #插入多条数据
+    data_list = [{},{},{},...,...]
+    collection.insert_many(data_list)
+
+-查:
+    #查询一条记录
+    collection.find_one({"name":"xiaoming":})
+
+    #查询所有记录
+    collection.find({{"name":"xiaoming":}})
+
+-删:
+    #删除一条数据
+    collection.delete_one({"name":"test1005"})
+
+    #删除全部数据
+    collection.delete_many({"name":"test1005"})
+
+-改:
+    #更新一条数据
+    collection.update_one({"name":"test1005"},{"$set":{"name":"new_test1005"}})
+
+    #更新全部数据
+    collection.update_many({"name":"test1005"},{"$set":{"name":"new_test1005"}})
+
+
+

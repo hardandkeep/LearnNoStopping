@@ -1,0 +1,79 @@
+Requests(常用):
+    1、requests库的七个主要方法:
+        requests.request()	构造一个请求，支持以下各种方法
+        requests.get()	    获取html的主要方法
+        requests.head()	    获取html头部信息的主要方法
+        requests.post()	    向html网页提交post请求的方法
+        requests.put()	    向html网页提交put请求的方法
+        requests.patch()	向html提交局部修改的请求
+        requests.delete()	向html提交删除请求
+
+    2.requests.get():
+        形式为r=requests.get(url,params,**kwargs):
+            url: 需要爬取的网站地址
+            params: 翻译过来就是参数， url中的额外参数，字典或者字节流格式，可选
+
+            **kwargs : 12个控制访问的参数:
+                1.params:字典或字节序列,作为参数增加到url中(get方法时用,以字典形式传入关键字参数)
+                2.data：字典,字节序或文件对象,重点作为向服务器提供或提交资源是提交,作为request的内容,
+                    与params不同的是,data提交的数据并不放在url链接里,而是放在url链接对应位置的地方作为数据来存储,
+                        它也可以接受一个字符串对象(post方法提交表单)
+                3.headers:可以用来模拟任何我们想模拟的浏览器来对url发起访问
+                4.timeout:用于设定超时时间,单位为秒,当发起一个get请求时可以设置一个timeout时间,如果在timeout时间内请求内容没有返回,将产生一个timeout的异常
+                5.proxies:字典,用来设置访问代理服务器
+                6.cookies:字典或CookieJar,指的是从http中解析cookie
+                7.auth:元组,用来支持http认证功能
+                8.files:字典,是用来向服务器传输文件时使用的字段
+                9.allow_redirects:开关,表示是否允许对url进行重定向,默认为True。
+                10.stream: 开关,指是否对获取内容进行立即下载,默认为True。
+                11.verify：开关,用于认证SSL证书， 默认为True。
+                12.cert:用于设置保存本地SSL证书路径
+
+    3.requests.post():
+        形式为r=requests.post(url,**kwargs):
+            **kwargs:见上述
+
+    4.requests.request():
+
+        requests.request(）支持其他所有的方法。
+        requests.request(method，url,**kwargs)
+
+        method: “GET”、”HEAD”、”POST”、”PUT”、”PATCH”等等
+        url: 请求的网址
+        **kwargs: 控制访问的参数
+
+    5.requests.Session():
+        形式为
+            #创建Session对象
+            s = requests.Session()
+            #利用Session对象来对需要进行用户验证的网站发起请求
+            response = s.post("http://127.0.0.1/api/mgr/signin",
+                   data={
+                       'username': 'byhy',
+                       'password': '88888888'
+                   })
+
+            # 通过 Session 对象 发送请求
+            response = s.get("http://127.0.0.1/api/mgr/customers",
+                  params={
+                      'action'    :  'list_customer',
+                      'pagesize'  :  10,
+                      'pagenum'   :  1,
+                      'keywords'  :  '',
+                  })
+
+    6.response属性:
+            r.status_code	    http请求的返回状态，若为200则表示请求成功
+
+            r.text	            http响应内容的字符串形式，即返回的页面内容
+
+            r.encoding	        从http header 中猜测的相应内容编码方式
+
+            r.apparent_encoding	从内容中分析出的响应内容编码方式（备选编码方式）
+
+            r.content	        http响应内容的二进制形式
+
+
+
+
+

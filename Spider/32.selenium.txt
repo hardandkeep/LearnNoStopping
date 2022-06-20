@@ -1,0 +1,217 @@
+Selenium:
+
+1.环境搭建:
+    -环境安装：pip install selenium
+    -下载一个浏览器的驱动程序---版本一定要对应
+    -查好驱动程序和浏览器的映射关系
+    -解压缩驱动程序到需要用到它的目录---注意每换一个工程目录都看看之前用到的那些包，文件之类的
+
+
+2.基本使用:
+    from selenium import webdriver
+    # 实例化浏览器对象
+    bro = webdriver.Chrome(excutable_path='./chromedriver.exe')
+    # 打开一个网页
+    bro.get('www.baidu.com')
+    # 定位输入框标签
+    input = bro.find_element_by_id("kw")
+    # 在输入框内输入python
+    input.send_keys('python')
+    # 定位搜索标签并点击
+    search = bro.find_element_by_id("su").click()
+    # 打印url
+    print(bro.current_url)
+    # 打印Cookies
+    print(bro.get_cookies())
+    # 打印网页源代码
+    print(bro.page_source)
+    # 关闭浏览器
+    bro.close()
+
+
+3.selenium各功能:
+
+    1.获取单节点:
+        常用find系列的方法:
+        '''中间代码省略'''
+        bro.find_element_by_name()
+        bro.find_element_by_id()
+        bro.find_element_by_css_selector()
+        bro.find_element_by_xpath()
+
+    2.获取多节点:
+        '''中间代码省略'''
+        bro.find_elements_by_name()
+        bro.find_elements_by_id()
+        bro.find_elements_by_css_selector()
+        bro.find_elements_by_xpath()
+
+    3.节点交互:
+        selenium可以驱动浏览器来执行一些动作:
+        输入文字用send_keys()
+        清空文字用clear()
+        点击按钮用click()
+
+    4.动作链:
+        from selenium import webdriver
+        from selenium.webdriver import ActionChains
+
+        '''中间代码省略'''
+
+        # 声明actions对象
+        actions = ActionChains(bro)
+        # 拖拽元素的起点和终点
+        actions.drag_and_drop(source,target)
+        # 执行动作
+        actions.perform()
+
+    5.执行JavaScript代码:
+        还有一些操作seleniumAPI并没有直接提供给我们,但是他提供了执行js代码的语句
+
+        # 将进度条下拉到最底部
+        brow.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+        # 弹出alert提示窗
+        brow.execute_script("alert('hello word')")
+
+    6.获取节点信息:
+        WebElement常用属性:
+        get_attribute 获取属性值
+        text          获取文本值 -->可以用来获取标签内的文本值
+        id            获取节点id -->可以用来获取标签内的id
+        location      获取节点在页面中的相对位置
+        tag_name      获取标签名称
+        size          获取节点大小(宽和高)
+
+    7.切换frame:
+        在自动化浏览器时,有时会无法获取某个元素,此时大可能就是未切换frame
+        注:页面会被分成好几个框架,因此元素会分别在不同的frame中
+
+        网页中有一种节点叫做iframe,也就是子Frame,相当于页面的子页面,
+        他的结构和外部网页的结构完全一致
+        selenium打开页面后,他默认是在父级Frame里面操作,
+        而此时如果页面中还有子Frame,他是不能获取到子Frame里面的节点的,
+        这时候就需要使用switch_to.frame()方法来切换Frame
+
+        bro.switch_to.frame("iframeResult")
+
+    8.延时等待:
+        1.隐式等待:
+            如果selenium没有在DOM中找到节点,将继续等待,超出设定事件后,则抛出找不到节点的异常
+            当查找节点而节点并没有立即出现的时候,隐式等待将等待一段时间在查找DOM,默认时间是0
+
+            # 设定等待时间
+            bro.implicitly_wait(time)
+
+        2.显示等待:
+            引入WebDriverWait对象指定最长等待时间,调用它的until方法,
+            传入要等待的条件expected_conditions,比如这里传入例如presence_of_element_located
+            这个条件,代表节点出现的意思,其参数是节点的定位元组,也就是ID为q的搜索框。
+            这样可以做到的效果就是,在10秒内如果ID为q的节点(即搜索框)成功加载出来,就返回该节点,
+            如果10秒还没有加载出来,就抛出异常。
+
+            from selenium import webdriver
+            from selenium.webdriver.common.by import By
+            from selenium.webdriver.support.ui import WebDriverWait
+            from selenium.webdriver.support import expected_conditions as EC
+
+            '''中间代码省略'''
+            #实例化wait对象,2表示下面有两个显示等待
+            wait = WebDriverWait(browser,2)
+
+            #直到input标签出现定位到该标签,并向等待条件内传入(标签定位方法,"")
+            input = wait.until(EC.presence_of_element_located((By.ID,"q")))
+            #直到button标签出现在点击,并向等待条件内传入(标签定位方法,"")
+            button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,".btn-search")))
+
+            # EC.presence_of_element_located   节点出现
+            # EC.element_to_be_clickable       可点击
+
+            ---------------不过不知道为啥我每次用这个都会报错,用隐式等待吧!!!---------------
+
+    9.选项卡管理:
+        import time
+        from selenium import webdriver
+        browser = webdriver.Chrome()
+
+        # 打开百度网页
+        browser.get("https://www.baidu.com")
+
+        # 新开一个选项卡,调用execute_script()方法传入JavaScript语法window.open()
+        browser.execute_script("window.open()")
+
+        # 调用window_handles属性获取当前开启的所有选项卡,返回的是选项卡的代号列表
+        print(browser.window_handles)
+        # ['CDwindow-7106D94FF002752ADF198B986343E31D', 'CDwindow-B669BA9559DBB78D8D6EC9C5AA699C40']
+
+        # 切换到新打开的选项卡,要想切换选项卡只需要调用switch_to.window()方法,这里我们将第二个选项卡代号传入,即跳转到第二个选项卡
+        browser.switch_to.window(browser.window_handles[1])
+        # 在第二个选项卡里打开新页面https://www.taobao.com
+        browser.get("https://www.taobao.com")
+        time.sleep(1)
+
+        # 然后切换回第一个选项卡
+        browser.switch_to.window(browser.window_handles[0])
+        # 打开jd页面
+        browser.get("https://jd.com")
+
+    10.前进和后退:
+        import time
+        from selenium import webdriver
+
+        browser = webdriver.Chrome()
+        browser.get("https://www.baidu.com")
+        browser.get("https://www.taobao.com")
+        browser.get("https://www.jd.com")
+        # 后退
+        browser.back()
+        time.sleep(2)
+        #前进
+        browser.forward()
+        browser.close()
+
+    11.Cookies:
+        from selenium import webdriver
+
+        browser = webdriver.Chrome()
+        browser.get("https://www.zhihu.com/explore")
+        # 获取cookies
+        cookies = browser.get_cookies()
+        print(cookies)
+        # 添加cookie
+        browser.add_cookie({"name":"name","domain":"www.zhihu.com","vlue":"germey"})
+        # 删除所有cookies
+        browser.delete_all_cookies()
+
+    12.Selenium规避被检测识别(淘宝,美团等等会检测是否是selenium):
+        解决方法:设置Chromedriver()的启动参数即可,开启实验性功能参数,它的值为['enable-automation']
+
+        from selenium import webdriver
+        from selenium.webdriver import ChromeOptions
+
+        options = ChromeOptions()
+        options.add_experimental_option('excludeSwitches',['enable-automation'])
+        driver = webdriver.Chrome(executable_path='./chromedriver.exe',options=options)
+
+    12.无头浏览器:
+        from selenium import webdriver
+        from selenium.webdriver.chrome.options import Options
+
+        # 创建chrome参数对象
+        opt = Options()
+        # 把chrome设置成无界面模式，不论windows还是linux都可以，自动适配对应参数
+        opt.add_argument('--headless')
+        # 创建chrome无界面对象
+        driver = webdriver.Chrome(options=opt)
+        driver.get("http://www.baidu.com")
+        print(driver.page_source)
+
+    13.异常处理:
+        try:
+            pass
+
+        except:
+            pass
+
+
+
+

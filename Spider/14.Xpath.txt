@@ -1,0 +1,60 @@
+xpath解析:
+  -xpath解析原理:
+      -1.实例化一个etree的对象，且需要将被解析的页面源码数据加载到该对象当中
+      -2.调用etree对象中的xpath方法结合着xpath表达式实现标签的定位和内容的捕获
+
+
+  -环境的安装：
+      -pip install lxml
+
+
+  -如何实例化一个etree对象：from lxml import etree
+      -1.将本地的html文档中的源码数据加载到etree对象中：
+          etree.parse(filepath)
+      -2.可以将从互联网上获取的源码数据加载到该对象当中:
+          etree.HTML('page_text')
+
+
+  -xpath表达式：xpath('xpath表达式')
+      - /:表示的是从根节点开始定位。表示的是一个层级。
+      - //:表示的是多个层级。可以表示从任意位置开始定位。
+      - 属性定位://div[@class="属性名"] == //tag[@attrName='attrvalue']
+      - 索引定位://div[@class="属性名"]/p[3]--这个地方索引是从1开始的，不是0哦！
+      - 取文本:
+            - /text() 获取的是标签中直系的文本内容
+            - //text() 获取的是标签中的非直系的文本内容，就是可以继续跨越层级去获取(标签内所有的文本内容)
+      -取属性:
+            - /@attrName ------例如： img/@src------取属性是通过@来特指的
+
+
+  -具体的xpath定位:
+        from lxml import etree
+        实例化一个etree对象并且将被解析的源码数据传入该对象
+        tree = etree.parse('test.html')
+
+        r = tree.xpath('/html/body/div')---一级一级的往里面去套，千层套娃
+        r = tree.xpath('/html//div')---这里//直接跨过了body这一级，//表示跨越多层
+        r = tree.xpath('//div')---这里//前面啥也没有，是指从根节点下(这边的根节点是html)定位所有的div标签
+        r = tree.xpath('//li[7]//text()')---这里表示：从整个源码中取第七个li，并且返回文本数据列表
+
+        r = tree.xpath('//div[@class="song"]')---这里是定位了众多div里class="song"的div，属性的定位用@......
+        r = tree.xpath('//div[@class="tang"]//li[5]/a/text()')[0]---这里表示：定位到第五个li标签中的a标签并且把文本数据取出，最后将返回列表的第一个元素传给对象
+        r = tree.xpath('//div[@class="tang"]//text()')---这里表示从tang这个div中返回所有的文本数据
+        r = tree.xpath('//div[@class="song"]/img/@src')---这里表示定位song这个div中的img标签中属性为src的图片地址
+
+         注意:定位比较外层的属性时，例如定位某个特定的div---xpath('//div[@class="属性名"')
+            而定位比较里面的标签里面的属性的时侯，例如定位某个图片地址---xpath('//div//img/@src')
+            它们的不同之处就是：前者无/而是[@class="属性名"](不止有class还有其他的，这里以这个为例)，而后者是/标签名/@属性名，无[]而有/
+
+         在实例时会遇到的问题：
+            1.在进行for循环遍历内层标签时，xpath解析表达式最开始需要加上./，./表示：当前标签下。
+            例如：
+                for li in li_list:
+                    data = li.xpath('./a/text()')此时./表示的就是在当前li标签下
+
+            2.解决输出中文乱码的情况：
+             一般情况下在遇到中文乱码的情况可以直接在响应哪里使用response.encoding = 'utf-8'(其中response是解析返回的html数据)
+             在utf-8也无法解决的时候，可以在有中文乱码的地方写上.encode('iso-8859-1').decode('gbk')即可---.encode前面写乱码的数据的那个变量
+
+            3.想一下子xpath解析两个或者多个对象，并且他们的层级结构不一样时：
+             可以使用逻辑值(我的叫法，xpath里面的东西)，|表示‘或’，

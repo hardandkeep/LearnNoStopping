@@ -1,0 +1,64 @@
+模拟登录：
+    -爬取基于某些用户的用户信息
+需求：对人人网进行模拟登录
+    -点击登录按钮之后会发起一个post请求
+    -post请求中会携带登录之前节点相关登录信息（用户名，密码，验证码......）
+        -直接找到那个请求包，对那个url发起请求，只需要把那些会变化的改成变量
+    -验证码在每次请求时都会动态变化
+
+模拟人人网登录：
+    -验证码得到识别，获取验证码图片的文字数据
+    -对post请求进行发送（处理请求参数）
+    -对响应数据进行持久化存储
+
+
+
+
+具体实现思路：
+  因为登录需要三个数据：账户名--密码--验证码(验证码先在密码多次输错，然后会出来)
+
+  然后打开开发者工具，把preserve_log勾上，我之前去弄就是没勾选(会自动把登录的包清除)
+
+  然后登录，抓包，去看里面的数据(注意多登录几次比对一下密码的那个参数是不是每次会变化)
+
+  在登录之前先把验证码图片抓取下来用超级鹰来动态识别，然后传递进data
+
+  最后用requests对那个发送登录的数据包进行请求
+
+
+
+
+
+  当登陆成功之后，我们想爬取个人主页信息的时候，却爬取不到---这是因为http是无状态的，他不会记录你之前所进行的会话
+
+  此时就需要用到cookie与session的知识：cookie：服务器所生成并保存在本地的一组数据，session：则是在服务器那，可以保持会话(在登陆之后，当前页面跳转到另外一个页面而不会丢失登录信息)
+
+  如何实现会话保持呢？
+
+  第一种方法(手动处理)：手动将请求头的cookie保存在headers中，传入参数，但是cookie是有时效的，不知道啥时候会失效
+                                    cookies = '复制过来的cookie'
+                                    cookie = {i.split("=")[0]:i.split("=")[1] for i in cookies.split(";")}
+
+  第二种方法(自动处理)：session会话对象：它可以进行请求的发送(和get，post差不多)
+                                    如果请求过程中产生了cookie，则该cookie会被自动存储/携带在该session对象中
+                                    使用session对象进行模拟登录post请求的发送(cookie就会被存储在seesion中)
+                                    session对象对个人主页的get请求进行发送(携带了cookie)
+                    具体操作：
+                           1.创建一个session对象--session = requests.Session()
+                           2.使用session对象进行模拟登录post请求的发送
+                           3.session对象对个人主页的get请求进行发送(携带了cookie)
+
+                    具体操作(人人网的登录加爬取个人主页):
+                    #创建session对象
+                           session = requests.Session()
+                    #使用session来进行post登录那个包的表单请求
+                           response = session.post(......)
+                    #当要爬个人主页的时候，使用携带了cookie的session来进行get请求
+                           detail_response = session.get(......)
+
+#一个简单方便的获取cookie的python库
+
+import browser_cookie3
+import requests
+cj = browser_cookie3.chrome() # firefox可以替换为browser_cookie3.firefox()
+r = requests.get(url, cookies=cj)

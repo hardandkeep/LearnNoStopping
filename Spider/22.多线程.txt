@@ -1,0 +1,48 @@
+线程 进程：
+    进程是资源单位，每一个进程至少要有一个线程
+    线程是执行单位
+
+当运行一个程序时，计算机会开辟一个空间，取存储里面相关的变量常量等
+启动每一个程序默认都会有一个主线程
+
+正常情况下运行程序都是单一线程，会一步一步的去执行语句
+  如：def func():
+      for i in range(1000):
+      print('func',i)
+     if __name__ == "__main__":
+         func()
+         for i in range(1000):
+             print("main",i)
+  这个程序的执行顺序便是先把func()执行完再继续向下执行
+
+多线程：
+第一种方法：
+    from threading import Thread---线程类
+    def func():
+      for i in range(1000):
+          print('func',i)
+
+    if __name__ == "__main__":、
+        t1 = Thread(target=func)---创建新的线程并给新的线程安排任务
+        t1.start() ---多线程状态为可以开始工作状态，具体的执行时间由cpu决定
+
+        t2 = ......
+        t2.start()
+
+        ......
+
+        for i in range(1000):
+             print("main",i)
+
+第二种方法：
+    class MyThread(Thread):
+        def func(self):
+            for i in range(1000):
+                print("子线程",i)
+    if __name__ == "__main__":
+        t = MyThread()
+        t.start()---注意：不可以t.func()，这样是调用了方法---单线程了
+        ......
+
+        for i in range(1000):
+            print("主线程",i)
