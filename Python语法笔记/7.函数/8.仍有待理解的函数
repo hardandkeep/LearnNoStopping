@@ -1,0 +1,118 @@
+>>> max(-1,0,key = abs) # 传入了求绝对值函数，则参数都会进行求绝对值后再取较大者
+-1
+
+
+>>> min(-1,-2,key = abs)  # 传入了求绝对值函数，则参数都会进行求绝对值后再取较小者
+-1
+
+
+round：对浮点数进行四舍五入求值
+>>> round(1.1314926,1)
+1.1
+>>> round(1.1314926,5)
+1.13149
+
+
+bool：根据传入的参数的逻辑值创建一个新的布尔值
+>>> bool() #未传入参数
+False
+>>> bool(0) #数值0、空序列等值为False
+False
+>>> bool(1)
+True
+
+
+complex：根据传入参数创建一个新的复数
+>>> complex() #当两个参数都不提供时，返回复数 0j。
+0j
+>>> complex('1+2j') #传入字符串创建复数
+(1+2j)
+>>> complex(1,2) #传入数值创建复数
+(1+2j)
+
+
+tuple：根据传入的参数创建一个新的元组
+>>> tuple() #不传入参数，创建空元组
+()
+>>> tuple('121') #传入可迭代对象。使用其元素创建新的元组
+('1', '2', '1')
+
+
+list：根据传入的参数创建一个新的列表
+>>>list() # 不传入参数，创建空列表
+[] 
+>>> list('abcd') # 传入可迭代对象，使用其元素创建新的列表
+['a', 'b', 'c', 'd']
+>>> list(range(1,999)) # 创建数值列表
+
+
+set：根据传入的参数创建一个新的集合
+>>>set() # 不传入参数，创建空集合
+set()
+>>> a = set(range(10)) # 传入可迭代对象，创建集合
+>>> a
+{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+frozenset：根据传入的参数创建一个新的不可变集合
+>>> a = frozenset(range(10))
+>>> a
+frozenset({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+
+
+enumerate：根据可迭代对象创建枚举对象
+>>> seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+>>> list(enumerate(seasons))
+[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+>>> list(enumerate(seasons, start=1)) #指定起始值
+[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+
+
+iter：根据传入的参数创建一个新的可迭代对象
+>>> a = iter('abcd') #字符串序列
+>>> a
+<str_iterator object at 0x03FB4FB0>
+>>> next(a)
+'a'
+>>> next(a)
+'b'
+>>> next(a)
+'c'
+>>> next(a)
+'d'
+>>> next(a)
+Traceback (most recent call last):
+  File "<pyshell#29>", line 1, in <module>
+    next(a)
+StopIteration
+
+
+split()函数:可以分割字符串
+>>> u = "www.doiido.com.cn"
+#使用默认分隔符
+>>> print u.split()
+['www.doiido.com.cn']
+#以"."为分隔符
+>>> print u.split('.')
+['www', 'doiido', 'com', 'cn']
+#fen割0次
+>>> print u.split('.',0)
+['www.doiido.com.cn']
+#分割一次
+>>> print u.split('.',1)
+['www', 'doiido.com.cn']
+#分割两次
+>>> print u.split('.',2)
+['www', 'doiido', 'com.cn']
+#分割两次，并取序列为1的项
+>>> print u.split('.',2)[1]
+doiido
+#分割最多次（实际与不加num参数相同）
+>>> print u.split('.',-1)
+['www', 'doiido', 'com', 'cn']
+#分割两次，并把分割后的三个部分保存到三个文件
+>>> u1,u2,u3 = u.split('.',2)
+>>> print u1
+www
+>>> print u2
+doiido
+>>> print u3
+com.cn

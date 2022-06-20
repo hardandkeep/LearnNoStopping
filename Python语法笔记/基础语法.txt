@@ -1,0 +1,1893 @@
+*表示仍然不太会的
+目录：
+Python基础语法：
+（1）打印出hello world
+（2）注释
+（3）数据类型
+（4）运算
+（5）输入
+（6）输出
+（7）序列
+（8）相等比较
+（9）选择
+（10）循环
+（11）字典(dict)
+*（12）集合(set)（不常用）
+*（14）pass,del,exec,eval
+（15）内建函数
+Python进阶语法：
+（1）文件
+（2）错误和异常
+（3）模块和包
+（4）作用域
+（5）高阶函数
+（6）装饰器
+（7）参数
+（8）面向对象
+（9）定制类（魔术方法）
+（10）日期和时间
+（11）数学与随机数
+（12）正则表达式
+ 
+ 
+ 
+Python基础语法：
+（1）打印出hello world
+# -*- coding: utf-8 -*-
+print "hello world"
+print "你好 世界"
+（2）注释
+1、（单行注释）以 # 开头，后面的文字直到行尾都算注释
+2、（多行注释）多行注释是用三引号'''   '''包含的（单引号和双引号均可）
+3、（中文注释）要注释中文必须程序开头先写上# -*- coding: utf-8 -*-，不然会报错
+ 
+（3）数据类型
+1、变量不需要声明，可以直接输入，大小写敏感
+2、这里的var = xxxx不叫变量赋值，而叫变量绑定，一个符号可以绑定任意类型的值。
+3、内置函数type(), 用以查询变量的类型
+
+var = 1
+print var  #1
+print type(var)  #整数类型 # <type 'int'>
+var = 1.1
+print var   #  1.1
+print type(var)  #浮点数类型  # <type 'float'>
+var = 'hello'
+print var  # hello
+print type(var)  #字符串  # <type 'str'>
+var = (1==1)  
+print var  # True
+print type(var)  #布尔型  # <type 'bool'>
+var = None
+print var  # None
+print type(var)  #空值  # <type 'NoneType'>
+var = 1+1j  或者complex(a,b)表示， 复数的实部a和虚部b都是浮点型
+print var  # (1+1j)
+print type(var)  #复数类型     # <type 'complex'>
+
+4、字符串以''或" "括起来的任意文本
+5、布尔型（True, False，可以用and, or, not运算，而不是C语言的&&和||）
+6、多变量赋值
+a = b = c = 1
+a, b, c = 1, 2, "john"    #等号两边都是元组，建议加上括号，增加可读性
+x,y = y,x     #两值交换，不需要temp,更加简洁
+ 7、赋值语句不可以返回值，对象是通过引用传递的
+y = (x = x + 1)   #这是非法的
+（4）运算
+1、加、减、乘、除、求余、乘方
+2、乘方  ** 右结合
+2**3=8 
+2**2**3=256
+（2**2）**3=64
+3、整数运算结果仍然是整数，浮点数运算结果仍然是浮点数。
+但是整数和浮点数混合运算的结果就变成浮点数了。
+4、字符串与整数相乘
+print 'abc' * 3  结果 abcabcabc
+5、因为Python把0、空字符串''和None看成 False，其他数值和非空字符串都看成 True
+True and 'a=T' 计算结果是 'a=T'
+继续计算 'a=T' or 'a=F' 计算结果还是 'a=T'
+要解释上述结果，又涉及到 and 和 or 运算的一条重要法则：短路计算。
+①在计算 a and b 时，如果 a 是 False，则根据与运算法则，整个结果必定为 False，因此返回 a；如果 a 是 True，则整个计算结果必定取决与 b，因此返回 b。
+②在计算 a or b 时，如果 a 是 True，则根据或运算法则，整个计算结果必定为 True，因此返回 a；如果 a 是 False，则整个计算结果必定取决于 b，因此返回 b。
+所以Python解释器在做布尔运算时，只要能提前确定计算结果，它就不会往后算了，直接返回结果。
+6、不支持自加(i++)和自减(i--)
+7、地板除（//）除法不管操作数何种数值类型，总是舍去小数部分，返回数字序列中比真正的商小的最接近的数字。
+print 5//3  #1
+print 1.0//2.0  #0.0
+print -1/2  #-1
+（5）输入
+x = input()   #1+2
+print type(x)   #<type 'int'>
+y = raw_input()   #1+2
+print type(y)    # <type 'str'>
+1、由此可见, input() 在对待纯数字输入返回所输入的数字的类型（int，float）
+而raw_input() 将所有输入作为字符串看待，返回字符串类型。 
+为了避免类型发生错误，一般情况下使用 raw_input() 来与用户交互。
+ 
+（6）输出
+1、Python2 里面print可以直接接字符串或者运算。
+2、Python3 里面print变成了一个函数，上面的写法不支持了，必须用一个括号括起来，否则会报告语法错误。
+3、>>>是Python解释器的提示符，不是代码的一部分。
+4、print语句也可以跟上多个字符串，用逗号“,”隔开，遇到逗号“,”会输出一个空格：
+print '1+2=',1+2  #1+2= 3
+5、多行输出使用三个引号和使用换行符\n一致
+
+print '''哈
+哈
+哈'''
+print "哈\n哈\n哈"
+#  输出结果
+# 哈
+# 哈
+# 哈
+# 哈
+# 哈
+# 哈
+
+6、转义
+print r'C:\log.txt'
+print 'C:\\log.txt'
+# C:\log.txt
+# C:\log.txt
+7、print 语句与字符串格式运算符( % )结合使用，可实现字符串替换功能
+print "%s is number %d!" % ("Python", 1)
+%s表示由一个字符串来替换，%d表示由一个整数来替换，%f表示由一个浮点数来替换。
+Python 非常灵活，即使将数字传递给 %s，也不会像其他要求严格的语言一样引发严重后果。
+ 
+（7）序列
+1、序列有两种： list (可变列表) 和tuple（不可变元组）
+2、定义:序列是一组有顺序的元素的集合,可以包含一个或多个元素，也可以没有任何元素。
+list  =  [0,1,2,3,4,5]    #列表用中括号，可改变，理解为数组
+tuple =  (0,1,2,3,4,5)    #元祖用小括号，不可改变
+由于Python是动态语言，所以list中包含的元素并不要求都必须是同一种数据类型
+2、序列的通用操作
+
+seq = "0123456789"
+print seq[0] #序列元素的下标从0开始。注意不要越界
+print seq[-1] #倒序索引，-1代表倒数第一。
+print seq[1:5] #支持切片操作，seq[start:end]，start包含在结果中，end不包含在结果中。
+print range(1,101)[0:10]#从第1个数元素开始取，到第11元素结束
+print seq[7:] #seq[start:end]中的end可以省略。
+print seq[-3:] #分片也支持负数。
+print seq[:3] #seq[start:end]中的start也可以省略。
+print seq[:] #全部省略会复制整个序列。
+print seq[::2] #支持步长。
+print seq[::-1] #逆序输出。
+print seq[9:1:-1] #支持负步长。
+print range(1,101)[2::3]#从第三元素开始取，每隔2个取一个元素，即3的倍数
+print range(1,101)[4:50:5]#从第五个取，每隔4个取一个，50以内5的倍数 
+print [1, 2, 3] + [4, 5, 6] # 序列支持相加，这解释了为啥字符串可以相加。
+print [1, 2, 3] * 3 #序列支持相乘，这解释了为啥字符串可以相称。
+print [None] * 10 #生成一个空序列。
+print 1 in [1, 2, 3] #成员判断。
+print range(1,101)[4::5][-10:] #切片可以嵌套，最后10个5的倍数，先获得5的倍数再取后10个
+
+记住倒数第一个元素的索引是-1。倒序切片包含起始索引，不包含结束索引。
+3、可变的列表(list)
+
+list = [0,1,2,3,4,5]
+list.append(7)   #append()总是把新元素添加到list的尾部
+print list  # [0, 1, 2, 3, 4, 5, 7]
+list.insert(0,-1)  #insert()接受两个参数，第一个是索引，第二个是元素
+print list  # [-1, 0, 1, 2, 3, 4, 5, 7]
+list.insert(-1,6) #insert(-1)是最后一个元素之前，即倒数第二个元素，因为insert()前插
+print list  # [-1, 0, 1, 2, 3, 4, 5, 6, 7]
+list.pop()  #pop()方法总是删掉最后一个元素
+print list   # [-1, 0, 1, 2, 3, 4, 5, 6]
+list.pop(0) #参数为索引
+print list  # [0, 1, 2, 3, 4, 5, 6]
+list[6]=7 #对list中的某一个索引赋值，就可以直接用新的元素替换掉原来的元素
+print list  # [0, 1, 2, 3, 4, 5, 7]
+list[0],list[-1]=list[-1],list[0] #第一与最后位置调换
+print list  # [7, 1, 2, 3, 4, 5, 0] 
+
+在使用可变对象的方法如 sort(),extend()和 reverse()的时候要注意,这些操作会在列表
+
+中原地执行操作,也就是说现有的列表内容会被改变,但是没有返回值!
+4、不可变的元组（tuple）
+字符串是一种特殊的元组
+没有 append()方法，也没有insert()和pop()方法，也不能赋值
+Tuple 比 list 操作速度快.如果您定义了一个值的常量集,并且唯一要用它做的是不断地遍历它,请使用 tuple 代替 list.如月份，星期。
+print (1,) #一个元素的元祖。
+因为()既可以表示tuple，又可以作为括号表示运算时的优先级，结果 (1) 被Python解释器计算出结果 1，导致我们得到的不是tuple，而是整数 1。正是因为用()定义单元素的tuple有歧义，所以 Python 规定，单元素 tuple 要多加一个逗号“,”，这样就避免了歧义。
+可变的元组：tuple的元素指向list，而list内的值可变
+5、序列解包
+x, y, z = 1, 2, 3
+print x, y, z
+(x, y, z) = (1, 2, 3)
+print x, y, z
+(x, y, z) = [1, 2, 3]
+print x, y, z
+（8）相等比较
+
+#== 和 is的差别，==比较的是值，is比较的是引用。
+x = [1, 2, 3]
+y = x
+z = [1, 2, 3]
+print(x == y) #True
+print(x == z) #True
+print(x is y) #True
+print(x is z) #False
+
+（9）选择
+1、Python代码的缩进规则。具有相同缩进的代码被视为代码块
+2、缩进请严格按照Python的习惯写法：4个空格，不要使用Tab，更不要混合Tab和空格
+3、格式
+
+if  条件1:
+    statement
+elif 条件2:
+    statement
+elif 条件3：
+    statement
+else:
+    statement
+
+  If后面不需要括号，但是条件后面需要冒号
+    elif 即 else if
+4、三元运算符
+
+x, y = 4, 3
+if x < y:
+    result = x
+else:
+    result = y
+print result
+#等价于
+result = x if x < y else y
+print result
+
+（10）循环
+1、for循环依次把list或tuple的每个元素迭代出来
+格式
+for 元素 in 序列: 
+    statement
+name 这个变量是在 for 循环中定义的，意思是，依次取出list中的每一个元素，并把元素赋值给 name，然后执行for循环体（就是缩进的代码块）
+L = ['Adam', 'Lisa', 'Bart']
+for name in L:
+    print name
+这样一来，遍历一个list或tuple就非常容易了。
+ 2、while循环，不会迭代 list 或 tuple 的元素，而是根据表达式判断循环是否结束。
+while 条件:
+    statement
+3、中断循环 break和continue
+4、range()的用法
+range(1,5) #代表从1到5(不包含5)   [1, 2, 3, 4]
+range(1,5,2) #代表从1到5，间隔2(不包含5)   [1, 3]
+range(5) #代表从0到5(不包含5)   [0, 1, 2, 3, 4]
+5、Python中，迭代永远是取出元素本身，而非元素的索引。
+对于有序集合，元素确实是有索引的。使用enumerate() 函数拿到索引
+
+L = ['Adam', 'Lisa', 'Bart', 'Paul']
+for index, name in enumerate(L):
+    print index, '-', name
+#结果
+# 0 - Adam
+# 1 - Lisa
+# 2 - Bart
+# 3 - Paul
+
+使用 enumerate() 函数，我们可以在for循环中同时绑定索引index和元素name。但是，这不是 enumerate() 的特殊语法。实际上，enumerate() 函数把：
+['Adam', 'Lisa', 'Bart', 'Paul']
+变成了类似：
+[(0, 'Adam'), (1, 'Lisa'), (2, 'Bart'), (3, 'Paul')]
+因此，迭代的每一个元素实际上是一个tuple：
+6、好用的zip()方法
+
+for x, y in zip(range(1, 10), range(1, 10)):
+    print(x, y)
+# 结果
+# (1, 1)
+# (2, 2)
+# (3, 3)
+# (4, 4)
+# (5, 5)
+# (6, 6)
+# (7, 7)
+# (8, 8)
+# (9, 9)
+
+7、列表生成式，非常简洁
+要生成[1x1, 2x2, 3x3, ..., 10x10]
+print [x * x for x in range(1, 11)]
+#[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+列表生成式的 for 循环后面还可以加上 if 判断。例如：
+print  [x * x for x in range(1, 11) if x % 2 == 0]
+# [4, 16, 36, 64, 100]
+8、迭代器
+它为类序列对象提供了一个类序列的接口。
+迭代非序列集合(例如映射和文件)时, 可以创建更简洁可读的代码。
+myTuple = (123, 'xyz', 45.67)
+i = iter(myTuple)
+print i.next()  #123
+print i.next()  #xyz
+print i.next()  #45.67
+i.next()        #报错
+（11）字典(dict)
+1、字典的元素没有顺序。你不能通过下标引用元素。字典是通过键来引用，用大括号
+查找速度快，无论dict有10个元素还是10万个元素，查找速度都一样。而list的查找速度随着元素增加而逐渐下降。
+dict的缺点是占用内存大，还会浪费很多内容
+dict是按 key 查找，所以，在一个dict中，key不能重复
+作为 key 的元素必须不可变
+2、已知两个列表，一个是名字，一个是成绩，要根据名字找到对应的成绩用两个list不方便，如果把名字和分数关联起来，组成类似的查找表，即 Python中的dict
+用 dict 表示“名字”-“成绩”的查找表如下：
+
+dic = {'tom':11, 'sam':57,'lily':100}
+print type(dic)   #<type 'dict'>
+
+d = {
+    'Adam': 95,
+    'Lisa': 85,
+    'Bart': 59
+}
+print d   #{'Lisa': 85, 'Adam': 95, 'Bart': 59}
+
+3、我们把名字称为key，对应的成绩称为value，dict就是通过 key 来查找 value。
+4、花括号 {} 表示这是一个dict，然后按照 key: value, 写出来即可。最后一个 key: value 的逗号可以省略。
+5、由于dict也是集合，len()函数可以计算任意集合的大小：
+print len(d)  #运算结果为3
+一个 key-value 算一个，因此，dict大小为3。
+6、可以简单地使用 d[key] 的形式来查找对应的 value，这和 list 很像，不同之处是，list 必须使用索引返回对应的元素，而dict使用key：
+print d['Adam']   #95
+注意: 通过 key 访问 dict 的value，只要 key 存在，dict就返回对应的value。如果key不存在，会直接报错：KeyError。
+要避免 KeyError 发生，有两个办法：
+
+一是先判断一下 key 是否存在，用 in 操作符：
+二是使用dict本身提供的一个 get 方法，在Key不存在的时候，返回None：
+ 
+print d.get('Bart')  #59
+print d.get('Paul')  #None
+7、在字典中增添一个新元素的方法：
+
+d = {
+    'Adam': 95,
+    'Lisa': 85,
+    'Bart': 59
+}
+print d   #{'Lisa': 85, 'Adam': 95, 'Bart': 59}
+d['lilei'] = 99
+print d   #{'lilei': 99, 'Lisa': 85, 'Adam': 95, 'Bart': 59}
+
+8、循环调用
+
+for key in d:   #或for key in d.keys()
+    print d[key]
+# 结果
+# 99
+# 85
+# 95
+# 59
+
+9、字典的常用方法
+print d.keys()          # 返回d所有的键
+print d.values()         # 返回d所有的值
+print d.items()         # 返回d所有的元素（键值对）
+d.clear()            # 清空d，dict变为{}
+del d[‘xxx’]                   # 删除 d 的‘xxx’元素
+for key, value in d.items():
+   print key, ':', value
+10、cmp()比较
+（1）先比较字典长度
+（2）再比较字典的键
+（3）最后比较字典的值
+（4）都一样就相等
+ 
+（12）集合(set)（不常用）
+1、dict的作用是建立一组 key 和一组 value 的映射关系，dict的key是不能重复的。
+有的时候，我们只想要 dict 的 key，不关心 key 对应的 value，目的就是保证这个集合的元素不会重复，这时，set就派上用场了。
+2、set 持有一系列元素，这一点和 list 很像，但是set的元素没有重复，而且是无序的，这点和 dict 的 key很像。
+3、创建 set 的方式是调用 set() 并传入一个 list，list的元素将作为set的元素：
+s = set(['A', 'B', 'C'])
+print s  #set(['A', 'C', 'B'])
+4、添加、删除：
+s.add('D')
+print s  #set(['A', 'C', 'B', 'D'])
+s.add('D') #已存在不会报错
+s.remove('D')
+print s  #set(['A', 'C', 'B'])
+s.remove('D')  #报错，需要先判断
+ 
+（13）函数
+1、定义一个函数要使用 def 语句，依次写出函数名、括号、括号中的参数和冒号:，然后，在缩进块中编写函数体，函数的返回值用 return 语句返回。
+def say_b():
+    print "b"
+say_b()  #调用函数，打印出b
+2、如果没有return语句，函数执行完毕后也会返回结果，只是结果为 None。
+3、函数返回多个值
+
+import math
+def move(x, y, step, angle):
+    nx = x + step * math.cos(angle)
+    ny = y - step * math.sin(angle)
+    return nx, ny
+x, y = move(100, 100, 60, math.pi / 6)
+print x, y   #151.961524227 70.0
+r = move(100, 100, 60, math.pi / 6)
+print r    #(151.96152422706632, 70.0)
+
+其实这只是一种假象，Python函数返回的仍然是单一值，是一个tuple：
+但是，在语法上，返回一个tuple可以省略括号，而多个变量可以同时接收一个tuple，按位置赋给对应的值，所以，Python的函数返回多值其实就是返回一个tuple，但写起来更方便。
+4、在函数内部，可以调用其他函数。如果一个函数在内部调用自身本身，这个函数就是递归函数。
+def fact(n):
+    if n==1:
+        return 1
+    return n * fact(n - 1)
+print fact(10)  #计算10的阶乘
+5、定义函数的时候，还可以有默认参数。
+
+def power(x, n=2):
+    s = 1
+    while n > 0:
+        n = n - 1
+        s = s * x
+    return s
+print power(2)  #默认计算2的平方
+print power(2,3)  #计算2的三次方
+
+由于函数的参数按从左到右的顺序匹配，所以默认参数只能定义在必需参数的后面：
+6、一个函数能接受任意个参数，我们就可以定义一个可变参数：
+def fn(*args):
+    print args
+fn('a')   #('a',)
+fn('a', 'b')  #('a', 'b')
+fn('a', 'b', 'c')   #('a', 'b', 'c')
+可变参数的名字前面有个 * 号，我们可以传入0个、1个或多个参数给可变参数：
+7、基本数据类型的参数：值传递
+表作为参数：指针传递
+ 
+（14）pass,del,exec,eval
+1、pass语句
+pass代表该语句什么都不做，因为python中空代码是非法的，比如一个if语句要求什么内容都不做，我们就可以使用pass语句。
+2、del语句
+一般来说python会删除那些不在使用的对象(因为使用者不会再通过任何变量或者数据结构引用它们)
+3、exec语句（运行字符串中的程序）
+exec "print 'hello world'"  #hello world
+4、eval函数(会计算python表达式(以字符串形式书写)，并且返回结果)
+print eval('2+ 2')  #4
+print eval(raw_input("please input number:"))  #输入2+2 得4
+  
+（15）内建函数
+
+1、cmp(obj1, obj2) 比较 obj1 和 obj2, 根据比较结果返回整数 i:
+     if obj1 < obj2   返回i < 0
+    if obj1 > obj2   返回i > 0
+    if obj1 == obj2  返回i == 0
+如果是用户自定义对象， cmp()会调用该类的特殊方法__cmp__()
+2、str() 强制转换成字符串
+3、type() :详见（3）数据类型 - 3、
+4、help()：通过用函数名作为 help()的参数就能得到相应的帮助信息
+5、isinstance(变量名，类型)： 判断是否是这个类型的元素，可以用if语句
+6、abs()：取绝对值
+7、enumerate()：详见（10）循环 - 5、
+8、len(seq):返回seq的长度
+9、sorted(iter)：排序，会调用cmp()
+10、zip(a1,a2……):详见（10）循环 - 6、
+11、range():详见（10）循环 - 4、
+12、string.lower()：转换字符串中所有大写字符为小写
+13、string.upper()：转换字符串中所有小写字符为大写
+14、string.strip()：删去字符串开头和结尾的空格
+15、string.capitalize()：把字符串第一个字符大写
+16、string.title()：所有单词都以大写开头
+17、max()和min()：找出最大和最小值
+18、sum()：求和
+19、reversed():倒序输出
+
+
+
+ 
+ 
+ Python进阶语法：
+（1）文件
+1、文件也是一个对象。
+2、打开文件
+f = open(文件名，模式)
+文件名可以是相对路径或者绝对路径
+模式有："r" 只读、“w” 写入、“a” 追加，“r+/w+”读写
+
+使用 'r' 或 'U' 模式打开的文件必须是已经存在的。 使用 'w' 模式打开的文件若存在则首先清空, 然后(重新)创建。 以 'a' 模式打开的文件是为追加数据作准备的, 所有写入的数据都将追加到文件的末尾。 即使你 seek 到了其它的地方。 如果文件不存在, 将被自动创建, 类似以 'w'模式打开文件。
+
+test = open("test.txt", "w")
+3、属性
+test = open("test.txt", "w")
+print "文件名: ", test.name   #文件名:  test.txt
+print "是否已关闭 : ", test.closed  #是否已关闭 :  False
+print "访问模式 : ", test.mode  #访问模式 :  w
+4、关闭 close()
+test = open("test.txt", "w")
+test.close()
+print "是否已关闭 : ", test.closed  #是否已关闭 :  True
+5、写入write()
+write()方法可将任何字符串写入一个打开的文件。
+write()方法不在字符串的结尾不添加换行符('\n')：
+test = open("test.txt", "w")
+test.write("this is a test\n this is a test again \n")
+test.close()
+#可以在文件中看到 
+# this is a test
+# this is a test again
+主动调用close()写缓存同步到磁盘，或者写入数据量大于或等于写缓存，写缓存同步到磁盘
+6、读取 read()、readline()、readlines()
+read（size）方法从一个打开的文件中读取一个字符串。size若不填则为尽量多的字符串，若填了则为结束位置。
+readline()读取当前行,允许有参数
+readlines()读取剩余行，返回一个字符串列表
+
+test = open ("test.txt", "w")
+test.write("python is a language \npython is a great language ")
+test.close()
+test = open("test.txt", "r")
+str = test.read()
+print str
+test.close()
+#python is a language 
+#python is a great language 
+
+7、文件位置
+tell()方法告诉你文件内的当前位置；即下一次的读写会发生在文件开头这么多字节之后：
+seek（offset [,from]）方法改变当前文件的位置。Offset变量表示要移动的字节数。From变量指定开始移动字节的参考位置。如果from被设为0，这意味着将文件的开头作为移动字节的参考位置。如果设为1，则使用当前的位置作为参考位置。如果它被设为2，那么该文件的末尾将作为参考位置。
+
+test = open ("test.txt", "w")
+test.write("python is a language \npython is a great language ")
+test.close()
+test = open("test.txt", "r")
+str = test.read()
+print "the first input:\n",str
+#输出
+# the first input:
+# python is a language
+# python is a great language
+# 查找当前位置
+position = test.tell()
+print position
+#50
+# 把指针再次重新定位到文件开头
+position = test.seek(0, 0)
+str2 = test.read(10)
+print "the second input:\n", str2
+# the second input:
+# python is
+test.close()
+
+8、重命名
+Python的os模块提供了帮你执行文件处理操作的方法，必须先导入它，才可以调用。
+os.rename(当前文件名,新的文件名)
+9、删除文件
+同样需要导入os模块，才可以调用。
+os.remove(文件名)
+ 
+（2）错误和异常
+1、错误类型
+OverflowError数值运算超出最大限制
+ZeroDivisionError 除(或取模)零 (所有数据类型)
+AttributeError对象没有这个属性
+IOError 输入/输出操作失败
+IndexError  序列中没有此索引(index)
+NameError  未声明/初始化对象 (没有属性)
+SyntaxError Python 语法错误
+TypeError 对类型无效的操作
+ValueError 传入无效的参数
+2、try-except处理异常
+try-except语句用来检测try语句块中的错误，从而让except语句捕获异常信息并处理。
+
+try:
+<语句>        #运行别的代码
+except Exception1,e：#Exception是错误类型名，e是储存错误，可以调用
+<语句>        #如果在try部份引发了'名字'异常
+except Exception2,e:
+<语句>        #如果引发了'名字'异常，获得附加的数据
+else:
+<语句>        #如果没有异常发生
+
+当try后的语句执行时发生异常，python就跳回到try并执行第一个匹配该异常的except子句，异常处理完毕，控制流就通过整个try语句（除非在处理异常时又引发新的异常）。如果在try子句执行时没有发生异常，python将执行else语句后的语句（如果有else的话），然后控制流通过整个try语句。
+
+try:
+   fh = open("testfile", "w")
+   fh.write("This is my test file for exception handling!!")
+except IOError:
+   print "Error: can\'t find file or read data"
+else:
+   print "Written content in the file successfully"   #Written content in the file successfully
+
+try:
+   fh = open("testfile", "r")  #只读文件不能写入
+   fh.write("This is my test file for exception handling!!")
+except IOError,e:
+   print "Error: can\'t find file or read data"
+   print "catch error:",e
+else:
+   print "Written content in the file successfully"   
+   #Error: can't find file or read data
+   #atch error: File not open for writing
+
+except若不带任何异常类型，即捕获所有发生的异常。但是不能捕获语法错误异常，如if a,因为是运行前错误而不是运行时错误
+也可带多种类型except(Exception1[, Exception2[,...ExceptionN]]]):
+错误类型后面跟着变量e，可以print错误提示
+案例如下
+
+import random
+num = random.randint(0,100)
+
+while 1:
+    try:
+        guess = int(raw_input("Enter 1-100:"))
+    except ValueError,e:
+        print "error ! please enter 1-100"
+        continue
+    if guess > num:
+        print "guess bigger:",guess
+    elif guess < num:
+        print "guess smaller:",guess
+    else:
+        print "guess right,game over"
+        break
+
+3、try-finally语句
+语句是否发生异常都将执行最后的代码。将异常保留下来交给系统处理，本身不处理异常。
+作用：为处理异常事件提供清理机制，用来关闭文件或者释放系统资源。
+try:
+<语句>
+finally:
+<语句>    #退出try时总会执行
+raise
+可以使用except语句或者finally语句，但是两者不能同时使用。else语句也不能与finally语句同时使用。
+4、try-except-finally  
+若try语句没有捕获异常，执行完try代码段后，执行finally
+若try捕获异常，首先执行except处理异常，然后执行finally
+5、try-except-else-finally
+若try语句没有捕获异常，执行完try代码段后，执行else代码段，最后执行finally
+若try捕获异常，首先执行except处理错误，然后执行finally
+6、try-finally-except
+当在try块中抛出一个异常，立即执行finally块代码。
+finally块中的所有语句执行后，异常被再次提出，并执行except块代码。
+7、with语句
+用来代替try-except-finally语句，使代码更加简洁
+with context[as var]:
+    with_suite
+context表达式返回是一个对象
+var用来保存context返回对象，单个返回值或元组
+with_suite使用var变量对context返回对象进行操作
+with open("1.text") as f:
+    for line in f.readline():
+        print line
+   1、打开1.txt文件
+   2、f变量接收文件对象返回的对象
+   3、with中的代码执行完成后，关闭文件
+程序使用了上下文管理器 (with...as...)。上下文管理器有隶属于它的程序块。当隶属的程序块执行结束的时候(也就是不再缩进)，上下文管理器自动关闭了文件
+运用情况：①文件操作 ②进城之间互斥操作：例如互斥锁  ③支持上下文的其他对象
+8、raise主动抛出异常
+#格式
+rasie [exception[,args]]
+#Exception 异常类
+#args 描述异常信息的元组
+raise TypeError,"Test Error"  #TypeError: Test Error
+9、assert语句
+断言语句：assert语句是用于检测表达式是否为真，如果为假，引发AssertionError错误
+#格式
+assert expression [,args]
+#expression 表达式
+#args 判断条件的描述信息
+10、自定义异常
+通过创建一个新的异常类，程序可以命名它们自己的异常。异常应该是典型的继承自Exception类，通过直接或间接的方式。
+自定义异常只能主动触发。
+
+class FileError(IOError):
+    pass
+
+try:
+    raise FileError,"test error"
+except FileError,e:
+    print e  #test error
+class CustomError(Exception):
+    def __init__(self,info):
+        Exception.__init__(self)
+        self.errorinfo = info
+    def __str__(self):
+        return "CustomError:%s" %self.errorinfo
+
+try:
+    raise CustomError("test CustomError")
+except CustomError,e:
+    print "ErrorInfo:",e  #ErrorInfo: CustomError:test CustomError
+
+ 
+（3）模块和包
+1、概念介绍
+#test.py  自身模块名test
+import p1.util  引用p1包的模块util
+print p1.util.f(2)  调用p1.util的函数f()
+如何区分包和普通目录 包下面有个__inti__.py文件
+2、如果我们只希望导入用到的math模块的某几个函数，而不是所有函数，可以用下面的语句：
+from math import pow, sin, log
+3、可以给函数起个“别名”来避免冲突：as
+from math import log
+from logging import log as logger   # logging的log现在变成了logger
+print log(10)   # 调用的是math的log
+logger(10, 'import from logging')   # 调用的是logging的log
+4、如果导入的模块不存在，Python解释器会报 ImportError 错误：
+5、第三方模块管理系统
+-easy_install
+-pip(推荐，已内置到Python2.7.9)
+ 
+（4）作用域
+1、函数作用域LEGB   L>E>G>B
+L:local 函数内部作用域
+E：enclosing 函数内部与内嵌函数之间，即闭包
+G：global全局作用域
+B：bulid-in 内置作用域 list,tuple之类
+
+passline = 60  #全局
+def func(val):
+    passline = 90  #函数内部
+    if val >= passline:
+        print "pass"
+    else:
+        print "failed"
+    def in_func():
+        print val  #函数内部与内嵌函数之间
+    in_func()
+func(69)  
+#failed
+#69
+
+ 
+（5）高阶函数
+1、由于参数 x, y和 f 都可以任意传入，如果 f 传入其他函数，就可以得到不同的返回值。
+def add(x, y, f):
+    return f(x) + f(y)
+print add(-5, 9, abs)  #abs(-5) + abs(9) = 14
+2、map() 映射
+map()是 Python 内置的高阶函数，它接收一个函数f和一个list，并通过把函数f依次作用在 list的每个元素上，得到一个新的 list 并返回。
+def f(x):
+    return x*x
+print map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])  #[1, 4, 9, 16, 25, 36, 49, 64, 81]
+利用map()函数，可以把一个 list 转换为另一个 list，只需要传入转换函数。
+由于list包含的元素可以是任何类型，因此，map()不仅仅可以处理只包含数值的 list，事实上它可以处理包含任意类型的 list，只要传入的函数f可以处理这种数据类型。
+3、reduce()折叠
+reduce()函数接收的参数和 map()类似，一个函数f，一个list，但reduce()传入的函数f必须接收两个参数，reduce()对list的每个元素反复调用函数f，并返回最终结果值。
+
+def f(x, y):
+    return x + y
+print reduce(f, [1, 3, 5, 7, 9])  #25
+#先计算头两个元素：f(1, 3)，结果为4；
+#再把结果和第3个元素计算：f(4, 5)，结果为9；
+#再把结果和第4个元素计算：f(9, 7)，结果为16；
+#再把结果和第5个元素计算：f(16, 9)，结果为25；
+#由于没有更多的元素了，计算结束，返回结果25。
+#初始值100
+print reduce(f, [1, 3, 5, 7, 9], 100)   #125
+
+reduce()还可以接收第3个可选参数，作为计算的初始值。
+4、filter() 过滤
+filter()函数接收一个函数f和一个list，这个函数 f 的作用是对每个元素进行判断，返回 True或 False，filter()根据判断结果自动过滤掉不符合条件的元素，返回由符合条件元素组成的新list。
+def is_odd(x): #是奇数
+    return x % 2 == 1
+print filter(is_odd, [1, 4, 6, 7, 9, 12, 17])   #[1, 7, 9, 17]
+利用filter()，可以完成很多有用的功能，例如，删除 None 或者空字符串：
+def is_not_empty(s):
+    return s and len(s.strip()) > 0
+print filter(is_not_empty, ['test', None, '', 'str', '  ', 'END'])   
+#['test', 'str', 'END']
+5、sorted()：对list进行排序
+print sorted([36, 5, 12, 9, 21])  #[5, 9, 12, 21, 36]
+但sorted()也是一个高阶函数，它可以接收一个比较函数来实现自定义排序，比较函数的定义是，传入两个待比较的元素x, y，如果x应该排在y的前面，返回-1，如果x应该排在y的后面，返回1。如果x和y相等，返回0。
+
+#倒序排序
+def reversed_cmp(x, y):
+    if x > y:
+        return -1
+    if x < y:
+        return 1
+    return 0
+print sorted([36, 5, 12, 9, 21], reversed_cmp)  #[36, 21, 12, 9, 5]
+
+6、Python的函数不但可以返回int、str、list、dict等数据类型，还可以返回函数！
+
+def f():
+    print 'call f()...'
+    # 定义函数g:
+    def g():
+        print 'call g()...'
+    # 返回函数g:
+    return g
+
+x = f()  # 调用f()  call f()...
+x   # 变量x是f()返回的函数：  #<function g at 0x00000000022CDA58>
+x()  # x指向函数，因此可以调用  call g()...
+x=f(),x()=g()
+
+请注意区分返回函数和返回值：
+def myabs():
+    return abs   # 返回函数
+def myabs2(x):
+    return abs(x)   # 返回函数调用的结果，返回值是一个数值
+在函数内部定义的函数和外部定义的函数是一样的，只是他们无法被外部访问：
+7、闭包（closure）
+内部函数中引用了外层函数的变量（enclosing作用域的变量），然后返回内层函数的情况。
+闭包的作用是封装和代码复用。
+传递的是参数
+
+#如果要实现两个功能，可以定义两个函数。
+def func_150(val):
+    passline = 90  #150
+    if val >= passline:
+        print ("pass")
+    else:
+        print "failed"
+
+def func_100(val):
+    passline = 60  #150
+    if val >= passline:
+        print ("pass")
+    else:
+        print "failed"
+
+func_100(69)#pass
+func_150(69)#failed
+
+#如果用闭包的话只需要定义一个函数
+def set_passline(passline):#passline
+    def cmp(val):
+        if val >= passline:
+            print "pass"
+        else:
+            print "failed"
+    return cmp  #返回值是一个函数
+
+f_100 = set_passline(60) #f_100就是cmp,f_100()就是cmp()，而且内置一个passline=60
+f_150 = set_passline(90)
+
+f_100(69)#pass
+f_150(69)#failed
+
+传递的是函数
+
+#不用闭包
+def my_sum(*arg):
+    if len(arg)==0:
+        return 0
+    for val in arg:
+        if not isinstance(val,int):
+            return 0
+    return sum(arg)
+
+def my_average(*arg):
+    if len(arg)==0:
+        return 0
+    for val in arg:
+        if not isinstance(val,int):
+            return 0
+    return sum(arg)/len(arg)
+
+print my_sum(1,2,3,4,5) #15
+print my_sum(1,2,3,4,5,'6')#0
+print my_average(1,2,3,4,5)#3
+print my_average()#0
+
+#使用闭包
+def my_sum(*arg):
+    print "in my_sum"
+    return sum(arg)
+
+def my_average(*arg):  
+    return sum(arg)/len(arg)
+
+def dec(func):
+    def in_dec(*arg):
+        print "in_dec()=",arg
+        if len(arg) == 0:
+            return 0
+        for val in arg:
+            if not isinstance(val, int):
+                return 0
+        return func(*arg)
+    return in_dec  #别加括号
+#dec return in_dec -> my_sum
+#my_sum = in_dec(*arg)
+my_sum = dec(my_sum)
+my_average = dec(my_average)#同理
+
+
+print my_sum(1,2,3,4,5)
+print my_sum(1,2,3,4,5,'6')
+
+# 结果
+# in_dec()= (1, 2, 3, 4, 5)
+# in my_sum
+# 15
+# in_dec()= (1, 2, 3, 4, 5, '6')
+# 0
+
+正确使用闭包，就要确保引用的局部变量在函数返回后不能变。
+返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+
+# 希望一次返回3个函数，分别计算1x1,2x2,3x3:
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i*i
+        fs.append(f)
+    return fs
+f1, f2, f3 = count()
+print f1(),f2(),f3()  #9 9 9
+#当count()函数返回了3个函数时，这3个函数所引用的变量 i 的值已经变成了3。由于f1、f2、f3并没有被调用，所以，此时他们并未计算 i*i，当 f1 被调用时，才计算i*i，但现在i的值已经变为3
+
+#正确如下
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f(j):
+            def g():
+                return j*j
+            return g
+        r = f(i)
+        fs.append(r)
+    return fs
+f1, f2, f3 = count()
+print f1(), f2(), f3()  #1 4 9
+
+8、匿名函数lambda
+def f(x):
+    return x*x
+print map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])  #[1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+print map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]) #[1, 4, 9, 16, 25, 36, 49, 64, 81]
+通过对比可以看出，匿名函数 lambda x: x * x 实际上就是：
+def f(x):
+    return x * x
+关键字lambda表示匿名函数，冒号前面的x 表示函数参数。
+匿名函数有个限制，就是只能有一个表达式，不写return，返回值就是该表达式的结果。
+使用匿名函数，可以不必定义函数名，直接创建一个函数对象，很多时候可以简化代码：
+print sorted([1, 3, 9, 5, 0], lambda x,y: -cmp(x,y))  #[9, 5, 3, 1, 0]
+返回函数的时候，也可以返回匿名函数：
+myabs = lambda x: -x if x < 0 else x
+print myabs(-1)  #1
+print myabs(1)   #1
+ 
+（6）装饰器
+1、decorator本质上就是一个高阶函数，它接收一个函数作为参数，然后，返回一个新函数。
+使用 decorator 用Python提供的@语法，这样可以避免手动编写f=decorate(f)这样的代码。
+2、装饰器用来装饰函数，返回一个函数对象
+被装饰函数标识符指向返回的函数对象   
+
+def dec(func):
+    print "call dec"
+    def in_dec(*arg):
+        print "in_dec()=",arg
+        if len(arg) == 0:
+            return 0
+        for val in arg:
+            if not isinstance(val, int):
+                return 0
+        return func(*arg)
+    return in_dec  #别加括号
+
+@dec    # 代替了my_sum = dec(my_sum)
+def my_sum(*arg): #my_sum = in_dec
+    print "in my_sum"
+    return sum(arg)
+
+print my_sum(1,2,3,4,5)
+
+# call dec
+# in_dec()= (1, 2, 3, 4, 5)
+# in my_sum
+# 15
+
+3、传入函数，含有两个参数
+
+def deco(func):
+    def in_deco(x,y):
+        print "in deco"
+        func(x,y)
+    print "call deco"
+    return in_deco
+
+@deco  #代替 bar = deco(bar) = in_deco    #bar()-> in_deco()->bar()
+def bar(x,y):
+    print "in bar",x+y
+
+bar(1,2)
+
+# call deco
+# in deco
+# in bar
+
+4、@log的定义
+
+def log(f):
+    def fn(x):
+        print 'call ' + f.__name__ + '()...'
+        return f(x)
+    return fn
+
+@log
+def factorial(n):
+    return reduce(lambda x,y: x*y, range(1, n+1))
+print factorial(10)
+# call factorial()...
+# 3628800
+
+但是，对于参数不是一个的函数，调用将报错。@log写死了只含一个参数的返回函数。
+5、要让@log自适应任何参数定义的函数，可以利用Python的*args和**kw，保证任意个数的参数总是能正常调用：
+可变参数*args表示任何多个无名参数，它是一个tuple；**kwargs表示关键字参数，它是一个dict。并且同时使用*args和**kwargs时，必须*args参数列要在**kwargs前。
+
+def log(f):
+    def fn(*args, **kw):
+        print 'call ' + f.__name__ + '()...'
+        return f(*args, **kw)
+    return fn
+
+@log
+def add(x, y):
+    return x + y
+print add(1, 2)
+# call add()...
+# 3
+
+6、@performance，它可以打印出函数调用的时间。
+计算函数调用的时间可以记录调用前后的当前时间戳，然后计算两个时间戳的差。
+
+import time
+def performance(f):
+    def fn(*args, **kw):
+        t1 = time.time()
+        r = f(*args, **kw)
+        t2 = time.time()
+        print 'call %s() in %fs' % (f.__name__, (t2 - t1))
+        return r
+    return fn
+
+@performance
+def factorial(n):
+    return reduce(lambda x,y: x*y, range(1, n+1))
+print factorial(5)
+# call factorial() in 0.000000s
+# 120
+
+7、对于被装饰的函数，log打印的语句是不能变的（除了函数名）。
+如果有的函数非常重要，希望打印出'[INFO] call xxx()...'，有的函数不太重要，希望打印出'[DEBUG] call xxx()...'，这时，log函数本身就需要传入'INFO'或'DEBUG'这样的参数：
+
+@log('DEBUG')
+def my_func():
+    pass
+#把上面的定义翻译成高阶函数的调用，就是：
+my_func = log('DEBUG')(my_func)
+#上面的语句看上去还是比较绕，再展开一下：
+log_decorator = log('DEBUG')
+my_func = log_decorator(my_func)
+#上面的语句又相当于：
+log_decorator = log('DEBUG')
+@log_decorator
+def my_func():
+    pass
+
+所以，带参数的log函数首先返回一个decorator函数，再让这个decorator函数接收my_func并返回新函数：
+而且wrapper(*args, **kw)要调用外层参数prefix，所以无法拆开
+
+def log(prefix):
+    def log_decorator(f):
+        def wrapper(*args, **kw):
+            print '[%s] %s()...' % (prefix, f.__name__)
+            return f(*args, **kw)
+        return wrapper
+    return log_decorator
+
+@log('DEBUG')
+def test():
+    pass
+print test()
+
+# [DEBUG] test()...
+# None
+
+8、区别
+
+#在没有decorator的情况下，打印函数名：
+def f1(x):
+    pass
+print f1.__name__  #f1
+
+#有decorator的情况下，再打印函数名：
+def log(f):
+    def wrapper(*args, **kw):
+        print 'call...'
+        return f(*args, **kw)
+    return wrapper
+@log
+def f2(x):
+    pass
+print f2.__name__  #wrapper
+
+可见，由于decorator返回的新函数函数名已经不是'f2'，而是@log内部定义的'wrapper'。这对于那些依赖函数名的代码就会失效。decorator还改变了函数的__doc__等其它属性。如果要让调用者看不出一个函数经过了@decorator的“改造”，就需要把原函数的一些属性复制到新函数中：
+
+def log(f):
+    def wrapper(*args, **kw):
+        print 'call...'
+        return f(*args, **kw)
+    wrapper.__name__ = f.__name__
+    wrapper.__doc__ = f.__doc__
+    return wrapper
+
+这样写decorator很不方便，因为我们也很难把原函数的所有必要属性都一个一个复制到新函数上，所以Python内置的functools可以用来自动化完成这个“复制”的任务：
+
+import functools
+def log(f):
+    @functools.wraps(f)   
+    def wrapper(*args, **kw):
+        print 'call...'
+        return f(*args, **kw)
+    return wrapper
+@log
+def f2(x):
+    pass
+print f2.__name__  #f2
+
+9、当一个函数有很多参数时，调用者就需要提供多个参数。如果减少参数个数，就可以简化调用者的负担。
+比如，int()函数可以把字符串转换为整数，当仅传入字符串时，int()函数默认按十进制转换：
+但int()函数也提供额外的base参数，默认为10。如果传入base参数，就可以做N进制转换：
+print int("10")    #10
+print int('10', 8)  #8
+print int('A', 16)  #10
+假设要转换大量的二进制字符串，每次都传入int(x, base=2)非常麻烦，于是，我们想到，可以定义一个int2()的函数，默认把base=2传进去：
+def int2(x, base=2):
+    return int(x, base)
+
+print int2('1000000')  #64
+print int2('1010101')  #85
+functools.partial就是帮助我们创建一个偏函数的，不需要我们自己定义int2()，可以直接使用下面的代码创建一个新的函数int2：
+import functools
+int2 = functools.partial(int, base=2)
+
+print int2('1000000')  #64
+print int2('1010101')  #85
+所以，functools.partial可以把一个参数多的函数变成一个参数少的新函数，少的参数需要在创建时指定默认值，这样，新函数调用的难度就降低了。
+ 
+（7）参数
+1、位置参数必须以在被调用函数中定义的准确顺序来传递，参数数目必须一致。
+2、所有必需的参数都要在默认参数之前。
+
+# 位置参数
+def func_with_parameters(x, y):
+    print(x, y)
+func_with_parameters(1, 2)
+
+#默认值参数
+def func_with_default_value_parameters(x, y, z = 3):
+    print(x, y, z)
+func_with_default_value_parameters(y = 2, x = 1)
+
+3、如果命名了参数，这里可以不按顺序给出参数。
+#命名参数
+def func_with_named_parameters(x, y, z):
+    print(x, y, z)
+func_with_named_parameters(z = 1, y = 2, x = 3)
+4、变长的参数在函数声明中不是显式命名的，因为参数的数目在运行时之前是未知的（甚至在运行的期间，每次函数调用的参数的数目也可能是不同的），这和常规参数（位置和默认）明显不同，常规参数都是在函数声明中命名的。由于函数调用提供了关键字以及非关键字两种参数类型，python 用两种方法来支持变长参数。
+func(*tuple_grp_nonkw_args, **dict_grp_kw_args)
+其中的 tuple_grp_nonkw_args 是以元组形式体现的非关键字参数组, dict_grp_kw_args 是装有关键字参数的字典。
+5、可变长的参数元组必须在位置和默认参数之后。
+# 收集多余的位置参数
+def func_with_collection_rest_parameters(x, y=0, *rest):
+    print(x, y)
+    print(rest)
+func_with_collection_rest_parameters(1, 2, 3, 4, 5)
+星号操作符之后的形参将作为元组传递给函数,元组保存了所有传递给函数的"额外"的参数(匹配了所有位置和具名参数后剩余的)。如果没有给出额外的参数，元组为空。
+6、关键字变量参数（Dictionary）
+在我们有不定数目的或者额外集合的关键字的情况中， 参数被放入一个字典中，字典中键为参数名，值为相应的参数值。
+
+#收集命名参数
+def func_with_collection_rest_naned_parameters(*args, **kw):
+    print(args)
+    print(kw)
+func_with_collection_rest_naned_parameters(1, 2, 3, x = 4, y = 5, z = 6)
+
+func_with_collection_rest_naned_parameters([1, 2, 3], {"x": 4, "y": 4, "z": 6}) 
+#这会导致args[0]指向第一个实参，args[1]指向第二个实参。
+#([1, 2, 3], {'y': 4, 'x': 4, 'z': 6})
+#{}
+func_with_collection_rest_naned_parameters(*[1, 2, 3], **{"x": 4, "y": 4, "z": 6}) 
+#这里的执行相当于func_with_collection_rest_naned_parameters(1, 2, 3, x = 4, y = 5, z = 6)。
+
+ 
+（8）面向对象
+1、类通过class关键字定义。类名以大写字母开头，紧接着是(object)，表示该类是从哪个类继承下来的。
+类也要细致命名，像“AddrBookEntry”，“RepairShop”等等就是很好的名字
+Python 并不支持纯虚函数（像 C++）或者抽象方法（如在 JAVA 中）
+class Person(object):
+    pass
+2、有了Person类的定义，就可以创建出具体的xiaoming、xiaohong等实例。创建实例使用类名+()，类似函数调用的形式创建：
+Python 规范推荐使用骆驼记法的下划线方式，比如，“update_phone”“update_email”。
+xiaoming = Person()
+xiaohong = Person()
+3、由于Python是动态语言，对每一个实例，都可以直接给他们的属性赋值：
+xiaoming = Person()
+xiaoming.name = 'Xiao Ming'
+xiaoming.gender = 'Male'
+xiaoming.birth = '1990-1-1'
+4、构造函数__init__()方法
+class Person(object):
+    def __init__(self, name, gender, birth):
+        self.name = name
+        self.gender = gender
+        self.birth = birth
+__init__()方法的第一个参数必须是self（也可以用别的名字，但建议使用习惯用法），后续参数则可以自由指定，和定义函数没有任何区别。
+相应地，创建实例时，就必须要提供除self以外的参数：
+xiaoming = Person('Xiao Ming', 'Male', '1991-1-1')
+xiaohong = Person('Xiao Hong', 'Female', '1992-2-2')
+print xiaoming.name  # 输出 'Xiao Ming'
+print xiaohong.birth  # 输出 '1992-2-2'
+定义Person类的__init__方法，除了接受 name、gender 和 birth 外，还可接受任意关键字参数，并把他们都作为属性赋值给实例。
+要定义关键字参数，使用 **kw；
+除了可以直接使用self.name = 'xxx'设置一个属性外，还可以通过 setattr(self, 'name', 'xxx') 设置属性。
+
+class Person(object):
+    def __init__(self, name, gender, birth, **kw):
+        self.name = name
+        self.gender = gender
+        self.birth = birth
+        for k, v in kw.iteritems():
+            setattr(self, k, v)
+xiaoming = Person('Xiao Ming', 'Male', '1990-1-1', job='Student')
+print xiaoming.name   #输出Xiao Ming
+print xiaoming.job   #输出Student
+
+5、析构函数
+由于 Python 具有垃圾对象回收机制（靠引用计数)，这个函数要直到该实例对象所有的引用都被清除掉后才会执行。所以很少用到。
+class Person(object):
+    def __init__(self, ……):
+6、Python对属性权限的控制是通过属性名来实现的，如果一个属性由双下划线开头(__)，该属性就无法被外部访问。
+
+class Person(object):
+    def __init__(self, name):
+        self.name = name
+        self._title = 'Mr'
+        self.__job = 'Student'
+p = Person('Bob')
+print p.name   # => Bob
+print p._title   # => Mr
+print p._Person__job  # => Student  #所以实际上并不是严格的私有成员
+print p.__job   # => Error
+
+但是，如果一个属性以"__xxx__"的形式定义，那它又可以被外部访问了，以"__xxx__"定义的属性在Python的类中被称为特殊属性，有很多预定义的特殊属性可以使用，通常我们不要把普通属性用"__xxx__"定义。
+以单下划线开头的属性"_xxx"可以在子类中使用，不应该被外部访问，理解为保护成员。
+"__xxx"可以理解为私有成员，但实质并不是，不建议访问。
+7、类属性是直接绑定在类上的，所以，访问类属性不需要创建实例，就可以直接访问：
+
+class Person(object):
+    address = 'Earth'
+    def __init__(self, name):
+        self.name = name
+p1=Person(xiaoming)
+print Person.address   # => Earth
+print p1.address      # => Earth
+# 由于Python是动态语言，类属性也是可以动态添加和修改的：
+Person.address = 'China'
+print p1.address   # => 'China'
+
+8、在实例变量上修改类属性
+当实例属性和类属性重名时，实例属性优先级高，它将屏蔽掉对类属性的访问。而其他不变
+9、访问类的属性
+有两种方法。最简单的是使用 dir()内建函数。另外是通过访问类的字典属性__dict__，这是所有类都具备的特殊属性之一。
+10、实例的方法。
+实例的方法就是在类中定义的函数，它的第一个参数永远是self，指向调用该方法的实例本身，其他参数和一个普通函数是完全一样的：在其他语言中,self就是this.
+
+class Person(object):
+    def __init__(self, name):
+        self.__name = name
+    def get_name(self):
+        return self.__name
+p1 = Person('Bob')
+print p1.get_name()  # self不需要显式传入  # => Bob
+print p1.__dict__  # {'_Person__name': 'Bob'}
+print p1._Person__name  # => Bob
+
+在实例方法内部，可以访问所有实例属性，这样，如果外部需要访问私有属性，可以通过方法调用获得，这种数据封装的形式除了能保护内部数据一致性外，还可以简化外部调用的难度。
+11、方法也分实例方法和类方法。
+@classmethod  调用的时候用类名而不是某个对象
+在class中定义的全部是实例方法，实例方法第一个参数self是实例本身。
+要在class中定义类方法，需要这么写：
+
+class Person(object):
+    count = 0
+    @classmethod
+    def how_many(cls):
+        return cls.count
+    
+    def __init__(self, name):
+        self.name = name
+        Person.count = Person.count + 1
+
+print Person.how_many()  #0
+p1 = Person('Bob')
+print Person.how_many()  #1
+
+通过标记一个@classmethod，该方法将绑定到Person类上，而非类的实例。类方法的第一个参数将传入类本身，通常将参数名命名为cls，上面的cls.count实际上相当于Person.count。
+因为是在类上调用，而非实例上调用，因此类方法无法获得任何实例变量，只能获得类的引用
+12、@property  像访问属性一样调用方法，即不用括号
+
+class Person(object):
+    count = 0
+    def __init__(self, name,age,weight):
+        self.name = name
+        self._age = age
+        self.__weight = weight
+        Person.count = Person.count + 1
+
+    @classmethod
+    def how_many(cls):
+        return cls.count
+
+    @property
+    def get_weight(self):
+        return self.__weight
+
+print Person.how_many()  # 0
+p1 = Person('Bob',20,50)
+print Person.how_many()  # 1
+print p1.get_weight  #50
+
+get/set方法：
+
+class Student(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.__score = score
+    def get_score(self):
+        return self.__score
+    def set_score(self, score):
+        if score < 0 or score > 100:
+            raise ValueError('invalid score')
+        self.__score = score
+#但是写 s.get_score() 和 s.set_score() 没有直接写 s.score 来得直接。
+
+　　
+用装饰器函数把get/set方法“装饰”成属性调用:
+把一个getter方法变成属性，只需要加上 @ property就可以了
+setter是关键字，这种“@+方法名字+点+setter”是个固定格式与@property搭配使用。 
+
+class Student(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.__score = score
+    @property
+    def score(self):
+        return self.__score
+    @score.setter
+    def score(self, score):
+        if score < 0 or score > 100:
+            raise ValueError('invalid score')
+        self.__score = score
+
+s = Student("Bob",100)
+print s.score  #100
+s.score = 90    #属性赋值
+print s.score  #90
+
+13、函数和方法
+函数是直接调用函数名，仅仅是一部分代码
+方法必须和对象结合在一起使用，是类的一部分
+方法可以看做是类的属性 
+
+class Test(object):
+    def test(self):
+        pass
+
+a = Test()
+print a.test  #<bound method Test.test of <__main__.Test object at 0x00000000022B8E10>>
+print a.test() #None
+a.test= "123"
+print a.test #123
+print a.test()  #报错
+
+14、定义子类
+
+class Person(object):
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+class Student(Person):
+    def __init__(self, name, gender, score):
+        super(Student, self).__init__(name, gender)  #初始化
+        self.score = score
+
+一定要用super(Student, self).__init__(name, gender)去初始化父类，否则，继承自Person的Student将没有name和gender。
+函数super(Student, self)将返回当前类继承的父类，即Person，然后调用__init__()方法，注意self参数已在super()中传入，在__init__()中将隐式传递，不需要写出（也不能写）
+使用super()的漂亮之处在于，你不需要明确给出任何基类名字，这意味着如果你改变了类继承关系，你只需要改一行代码（class语句本身）而不必在大量代码中去查找所有被修改的那个类的名字。
+一个实例可以看成它本身的类型，也可以看成它父类的类型。
+15、多重继承
+
+class A(object):
+    def __init__(self, a):
+        print 'init A...'
+        self.a = a
+class B(A):
+    def __init__(self, a):
+        super(B, self).__init__(a)
+        print 'init B...'
+class C(A):
+    def __init__(self, a):
+        super(C, self).__init__(a)
+        print 'init C...'
+class D(B, C):
+    def __init__(self, a):
+        super(D, self).__init__(a)
+        print 'init D...'
+
+像这样，D 同时继承自 B 和 C，也就是 D 拥有了 A、B、C 的全部功能。多重继承通过super()调用__init__()方法时，A 虽然被继承了两次，但__init__()只调用一次：
+多重继承的目的是从两种继承树中分别选择并继承出子类，以便组合功能使用。
+举个例子，Python的网络服务器有TCPServer、UDPServer、UnixStreamServer、UnixDatagramServer，而服务器运行模式有多进程ForkingMixin和多线程ThreadingMixin两种。
+要创建多进程模式的 TCPServer：
+class MyTCPServer(TCPServer, ForkingMixin)
+    pass
+要创建多线程模式的 UDPServer：
+class MyUDPServer(UDPServer, ThreadingMixin):
+    pass
+如果没有多重继承，要实现上述所有可能的组合需要 4x2=8 个子类。
+16、多态
+用一个类继承多个类，调用同一个方法，会有不同的反应，因为被重写了。
+17、鸭子类型
+定义：“当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。
+这种风格适用于动态语言(比如PHP、Python、Ruby、Typescript、Perl、Objective-C、Lua、Julia、JavaScript、Java、Groovy、C#等)和某些静态语言
+在鸭子类型中，关注的不是对象的类型本身，而是它是如何使用的。例如，在不使用鸭子类型的语言中，我们可以编写一个函数，它接受一个类型为鸭的对象，并调用它的走和叫方法。在使用鸭子类型的语言中，这样的一个函数可以接受一个任意类型的对象，并调用它的走和叫方法。
+鸭子类型通常得益于不测试方法和函数中参数的类型，而是依赖文档、清晰的代码和测试来确保正确使用。从静态类型语言转向动态类型语言的用户通常试图添加一些静态的（在运行之前的）类型检查，从而影响了鸭子类型的益处和可伸缩性，并约束了语言的动态特性。
+鸭子类型比接口更好用。
+
+class TestClass1:
+    def say(self):
+        print("我是鸭子1")
+class TestClass2:
+    def say(self):
+        print("我是鸭子2")
+def duck_say(duck):
+    duck.say()
+duck_say(TestClass1()) # 我是鸭子1
+duck_say(TestClass2()) # 我是鸭子2
+
+18、getattr()、setattr()和delattr()：
+getattr()和 setattr()函数相应地取得和赋值给对象的属性，
+getattr()会在你试图读取一个不存在的属性时，引发 AttributeError 异常，除非给出那个可选的默认参数。
+setattr()将要么加入一个新的属性，要么取代一个已存在的属性。
+delattr()函数会从一个对象中删除属性
+
+class Person(object):
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+
+class Student(Person):
+    def __init__(self, name, gender, score):
+        super(Student, self).__init__(name, gender)
+        self.score = score
+    def whoAmI(self):
+        return 'I am a Student, my name is %s' % self.name
+
+s = Student('Bob', 'Male', 88)
+print getattr(s, 'name')  # 获取name属性  #Bob
+
+setattr(s, 'name', 'Adam')  # 设置新的name属性
+print s.name #Adam
+getattr(s, 'age')  # 获取age属性，但是属性不存在，报错：
+getattr(s, 'age', 20)  # 获取age属性，如果属性不存在，就返回默认值20：
+
+ 
+（9）定制类（魔术方法）
+1、__str__()：把一个类的实例变成 str 
+__repr__()转换为机器看的字符串，可以由eval()执行
+
+class Person(object):
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+    def __str__(self):
+        return '(Person: %s, %s)' % (self.name, self.gender)
+p = Person('Bob', 'male')
+print p   #(Person: Bob, male)
+
+2、比较运算符_cmp__()：可以实现对一组 Student 类的实例排序
+__eq__()判断等于，__lt__()判断小于，__gt__()判断大于
+
+class Student(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+    def __str__(self):
+        return '(%s: %s)' % (self.name, self.score)
+    def __cmp__(self, s):
+        if self.name < s.name:
+            return -1
+        elif self.name > s.name:
+            return 1
+        else:
+            return 0
+
+L = [Student('Tim', 99), Student('Bob', 88), Student('Alice', 77)]
+print sorted(L)    #[(Alice: 77), (Bob: 88), (Tim: 99)]
+L = [Student('Tim', 99), Student('Bob', 88), 100, 'Hello']  #list不仅仅包含 Student 类
+print sorted(L)  #报错
+
+上述 Student 类实现了__cmp__()方法，__cmp__用实例自身self和传入的实例 s 进行比较，如果self应该排在前面，就返回 -1，如果s应该排在前面，就返回1，如果两者相当，返回 0。
+3、__len__()：返回元素的个数
+
+class Students(object):
+    def __init__(self, *args):
+        self.names = args
+    def __len__(self):
+        return len(self.names)
+ss = Students('Bob', 'Alice', 'Tim')
+print len(ss)   #3
+
+4、四则运算：__add__(),__sub__(),__mul__(),__div__()
+逻辑运算 __or__(),__and__()
+
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+class Rational(object):
+    def __init__(self, p, q):
+        self.p = p
+        self.q = q
+    def __add__(self, r):
+        return Rational(self.p * r.q + self.q * r.p, self.q * r.q)
+    def __sub__(self, r):
+        return Rational(self.p * r.q - self.q * r.p, self.q * r.q)
+    def __mul__(self, r):
+        return Rational(self.p * r.p, self.q * r.q)
+    def __div__(self, r):
+        return Rational(self.p * r.q, self.q * r.p)
+    def __str__(self):
+        g = gcd(self.p, self.q)
+        return '%s/%s' % (self.p / g, self.q / g)
+    __repr__ = __str__
+r1 = Rational(1, 2)
+r2 = Rational(1, 4)
+print r1 + r2   #3/4
+print r1 - r2   #1/4
+print r1 * r2   #1/8
+print r1 / r2   #2/1
+
+我们也许还有希望覆盖“原位”操作， 比如， __iadd__()。这是用来支持像 mon += tue 这样的操作符，并把正确的结果赋给 mon。重载一个__i*__()方法的唯一秘密是它必须返回 self。把下面的片断加到我们例子中，以修复上面的 repr()问题，并支持增量赋值：
+5、类型转换：__int__(),__float__()
+
+class Rational(object):
+    def __init__(self, p, q):
+        self.p = p
+        self.q = q
+    def __int__(self):
+        return self.p // self.q
+    def __float__(self):
+        return float(self.p) / self.q
+
+print int(Rational(7, 2))     #3
+print int(Rational(1, 3))     #0
+print float(Rational(7, 2))   #3.5
+print float(Rational(1, 3))   #0.333333333333
+
+6、__slots__():限制当前类所能拥有的属性，能节省内存
+
+class Person(object):
+    __slots__ = ('name', 'gender')
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+p = Person('Bob', 'male')
+print p.name  #Bob
+print p.gender   #male
+print p.score  #报错
+
+class Student(Person):
+    __slots__ = ('score',)
+    def __init__(self, name, gender, score):
+        super(Student, self).__init__(name, gender)
+        self.score = score
+
+s = Student('Bob', 'male', 59)
+print s.score   # 59   
+
+__slots__定义的属性仅对当前类起作用，对继承的子类是不起作用的。除非在子类中也定义__slots__
+7、__call__():
+在Python中，所有的函数都是可调用对象。
+一个类实例也可以变成一个可调用对象，只需要实现一个特殊方法__call__()。
+
+class Person(object):
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+
+    def __call__(self, friend):
+        print 'My name is %s...' % self.name
+        print 'My friend is %s...' % friend
+
+p = Person('Bob', 'male')
+p('Tim')
+# My name is Bob...
+# My friend is Tim...
+
+单看p('Tim')你无法确定p是一个函数还是一个类实例，所以，在Python中，函数也是对象，对象和函数的区别并不显著。
+ 
+（10）日期和时间
+1、time包基于C语言的库函数(library functions)。Python的解释器通常是用C编写的，Python的一些函数也会直接调用C语言的库函数。
+2、时间间隔是以秒为单位的浮点小数。
+3、每个时间戳都以自从1970年1月1日午夜（历元）经过了多长时间来表示。
+import time;  # 引入time模块
+ticks = time.time()
+print ticks
+4、获取当前时间
+import  time
+localtime = time.localtime(time.time())
+print "本地时间为 :", localtime
+#本地时间为 : time.struct_time(tm_year=2017, tm_mon=2, tm_mday=13, tm_hour=22, tm_min=20, tm_sec=59, tm_wday=0, tm_yday=44, tm_isdst=0)
+#时间元组struct_time：年，月，日，小时，分钟，秒，一周第几天（0是周一），一年第几天，夏令时
+5、获取格式化时间
+最简单的获取可读的时间模式的函数是asctime():
+import time
+localtime = time.asctime( time.localtime(time.time()) )
+print "本地时间为 :", localtime
+#本地时间为 : Mon Feb 13 22:23:57 2017
+我们可以使用 time 模块的 strftime 方法来格式化日期：
+
+import time
+# 格式化成2016-03-20 11:45:39形式
+print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+#2017-02-13 22:25:08
+# 格式化成Sat Mar 28 22:24:24 2016形式
+print time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
+#Mon Feb 13 22:25:08 2017
+# 将格式字符串转换为时间戳
+a = "Sat Mar 28 22:24:24 2016"
+print time.mktime(time.strptime(a, "%a %b %d %H:%M:%S %Y"))
+#1459175064.0
+
+python中时间日期格式化符号：
+%y 两位数的年份表示（00-99）
+%Y 四位数的年份表示（000-9999）
+%m 月份（01-12）
+%d 月内中的一天（0-31）
+%H 24小时制小时数（0-23）
+%I 12小时制小时数（01-12）
+%M 分钟数（00=59）
+%S 秒（00-59）
+%a 本地简化星期名称
+%A 本地完整星期名称
+%b 本地简化的月份名称
+%B 本地�����整的月份名称
+%j 年内的一天（001-366）
+%U 一年中的星期数（00-53）星期天为星期的开始
+%w 星期（0-6），星期天为星期的开始
+%W 一年中的星期数（00-53）星期一为星期的开始
+6、获取某月日历
+Calendar模块有很广泛的方法用来处理年历和月历，例如打印某月的月历：
+
+import calendar
+cal = calendar.month(2017, 2)
+print "以下输出2017年2月份的日历:"
+print cal
+以下输出2017年2月份的日历:
+#    February 2017
+# Mo Tu We Th Fr Sa Su
+#        1  2  3  4  5
+#  6  7  8  9 10 11 12
+# 13 14 15 16 17 18 19
+# 20 21 22 23 24 25 26
+# 27 28
+
+7、time.sleep(secs)：推迟调用线程的运行，secs指秒数。
+import time
+print('start')
+time.sleep(3)     # sleep for 3 seconds
+print('wake up')
+8、datetime包
+datetime包是基于time包的一个高级包， 为我们提供了多一层的便利。
+datetime可以理解为date和time两个组成部分。date是指年月日构成的日期(相当于日历)，time是指时分秒微秒构成的一天24小时中的具体时间(相当于手表)。
+import datetime
+t = datetime.datetime(2017,2,13,21,30)
+print(t)#2017-02-13 21:30:00
+datetime包还定义了时间间隔对象(timedelta)。一个时间点(datetime)加上一个时间间隔(timedelta)可以得到一个新的时间点(datetime)。同理，两个时间点相减会得到一个时间间隔。
+
+import datetime
+t      = datetime.datetime(2017,2,13,21,30)
+t_next = datetime.datetime(2017,2,13,23,30)
+delta1 = datetime.timedelta(seconds = 600)
+delta2 = datetime.timedelta(weeks = 3)
+print(t + delta1) #2017-02-13 21:40:00
+print(t + delta2) #2017-03-06 21:30:00
+print(t_next - t) #2:00:00
+
+9、其他模块：pytz模块、dateutil模块
+ 
+（11）数学与随机数
+1、math包主要处理数学相关的运算。math包定义了两个常数:
+math.e   # 自然常数e       
+math.pi  # 圆周率pi
+2、math包运算
+math.ceil(x)       # 对x向上取整，比如x=1.2，返回2
+math.floor(x)      # 对x向下取整，比如x=1.2，返回1
+math.pow(x,y)      # 指数运算，得到x的y次方
+math.log(x)       # 对数，默认基底为e。可以使用base参数，来改变对数的基地。
+math.sqrt(x)       # 平方根
+3、math包三角函数:
+math.sin(x), math.cos(x), math.tan(x), math.asin(x), math.acos(x), math.atan(x)
+这些函数都接收一个弧度(radian)为单位的x作为参数。
+角度和弧度互换: math.degrees(x), math.radians(x)
+4、random包
+1) 随机挑选和排序
+random.choice(seq)   # 从序列的元素中随机挑选一个元素
+比如random.choice(range(10)) #从0到9中随机挑选一个整数。
+random.sample(seq,k) # 从序列中随机挑选k个元素
+random.shuffle(seq)  # 将序列的所有元素随机排序
+2）随机生成实数
+random.random()        # 随机生成下一个实数，它在[0,1)范围内。
+random.uniform(a,b)      # 随机生成下一个实数，它在[a,b]范围内。
+5、decimal 十进制浮点运算类 Decimal
+ 
+（12）正则表达式
+1、匹配字符串
+str.startswith()和str.endswith()
+一个句子结尾是\n来结束的，所以用endswith（‘’）方法匹配时要注意传入的变量带有\n
+或者用切片操作，str[:-1].endswith()
+
+def find(fname):
+    f = open(fname,"r+")
+    for line in f :
+        if line.startswith("this")\    #一个句子太长时使用 \ 符号来换行
+                or line[:-1].endswith("apple"):
+            print line
+
+find("test1.txt")
+# this is an apple
+# this is a pear
+# this is a banana
+# that is an apple
+
+2、正则表达式概念
+使用单个字符串来描述匹配一系列符合某个句法规则的字符串，是对字符串操作的一种逻辑公式，应用场景在处理文本和数据。
+re 模块使Python语言拥有全部的正则表达式功能。
+3、导入re模块  #import re
+利用re.compile(正则表达式)返回pattern
+利用pattern.match(待匹配字符串)返回match
+match.group()返回子串
+match.string()返回主串
+match.span()返回子串在主串中的位置
+
+import re
+str1 = "this is an apple"
+regex = re.compile(r"this")  #r‘ ’内的字符不转义
+print regex   #<_sre.SRE_Pattern object at 0x0000000001D2DDD8>
+ma = regex.match(str1)
+print ma  #<_sre.SRE_Match object at 0x0000000002075510>
+print ma.group()  #this
+print ma.span()  #(0, 4)
+print ma.string  #this is an apple
+print ma.re    #=regex
+
+4、re.match 尝试从字符串的开始匹配一个模式。
+re.match(pattern, string, flags=0)
+pattern  匹配的正则表达式
+string 要匹配的字符串
+flags 标志位，用于控制正则表达式的匹配方式，如:是否区分大小写， 多行匹配等等
+匹配成功re.match方法返回一个匹配的对象，否则返回None。
+5、group(num)或groups()匹配对象函数来获取匹配表达式。
+group(num=0)匹配的整个表达式的字符串，group()可以一次输入多个组号，在这种情况下它将返回一个包含那些组所对应值的元组。
+groups()返回一个包含所有小组字符串的元组。
+6、基本匹配符
+①.      匹配任意字符（除了\n）,一个点只是一个字符
+②[…]   匹配字符集   如[a-z][A-Z][0-9][a-zA-Z0-9]
+③[^…]  匹配不在[]中的任意字符
+④\d     匹配数字等价于[0-9]
+⑤\D     匹配非数字
+⑥\s     匹配空白，包括空格、制表符、换页符等等。等价于[\f\n\r\t\v] 
+⑦\S     匹配非空白
+⑧\w     匹配单词字符，匹配包括下划线的任何单词字符。等价于[A-Za-z0-9_]   
+⑨\W     匹配非单词字符
+import re
+ma = re.match(r'[\w]','0')
+print ma.group()#0
+ma = re.match(r'\[[\w]\]','[0]')
+print ma.group()#[0]
+7、特殊匹配符
+①*      匹配前一个字符0次或无限次
+②+      匹配前一个字符1次或无限次
+③？     匹配前一个字符0次或1次
+④{m}    匹配前一个字符m次
+⑤{m,n}  匹配前一个字符m到n次
+⑥*?或+?或?? 匹配模式变为非贪婪（尽可能减少匹配字符）
+
+import re
+ma = re.match(r'[a-zA-Z0-9]*','SAFGAFG')
+print ma.group()  #SAFGAFG
+ma = re.match(r'[a-zA-Z0-9]{3,6}@163.com','SAFGFG@163.com')
+print ma.group()  #SAFGFG@163.com
+ma = re.match(r'[0-9][a-z]*','1bc')
+print ma.group()  #1bc
+ma = re.match(r'[0-9][a-z]*?','1bc')
+print ma.group()  #1
+
+8、高级匹配符
+①^      匹配字符串开头
+②$      匹配字符串结尾
+③\A     指定的字符串必须出现在开头
+④\Z     指定的字符串必须出现在结尾
+⑤|      或，匹配左右任意一个表达式
+⑥(ab)   括号中表达式作为一个分组
+⑦\<number>  引用编号为num的分组匹配到的字符串
+⑧(?P<name>) 分组起一个别名
+⑨(?P=name)  引用别名为name的分组匹配字符串
+
+import re
+ma = re.match(r'^[\w]{4,10}@163.com$',"abc123@163.com")
+print ma.group()  #abc123@163.com
+ma = re.match(r'\Aabc[\w]*',"abc123")
+print ma.group() #abc123
+ma = re.match(r'[1-9]?\d$',"99")#0-99
+print ma.group()  #99
+ma = re.match(r'[1-9]?\d$|100',"100")#0-99
+print ma.group()  #100
+ma = re.match(r'[\w]{4,6}@(163|126|qq).com',"abc123@qq.com")
+print ma.group()  #abc123@qq.com
+ma = re.match(r'<([\w]+>)[\w]+</\1',"<book>python</book>")
+print ma.group()  #<book>python</book>
+ma = re.match(r'<(?P<mark>[\w]+>)[\w]+</(?P=mark)',"<book>python</book>")
+print ma.group()  #<book>python</book>
+ma = re.match(r'<(?P<ht>[\w]+>)<(?P<h>[\w]+>)<(?P<s>[\w]+>).+</(?P=s)</(?P=h)</(?P=ht)',"<html><head><script>javascript:alect('hello world')</script></head></html>")
+print ma.group()  #<html><head><script>javascript:alect('hello world')</script></head></html>
+print ma.groups()  #('html>', 'head>', 'script>')
+
+9、其他方式
+①search(pattern,string,flags=0)
+会在字符串内查找模式匹配，直到找到第一个匹配
+匹配成功re.search方法返回一个匹配的对象，否则返回None
+②findall(pattern,string,flags=0)
+找到匹配，返回所有匹配部分的列表
+③sub(pattern,repl,string,count=0,flags=0)
+将字符串中匹配正则表达式的部分替换为其他值
+④split(pattern,string,maxsplit=0,flags=0)
+根据匹配分割字符串，返回分割字符串组成的列表
+
+import re
+str1 = "abc = 100"
+info = re.search(r'\d+',str1)
+print info.group()  #100
+str2 = "c++=100,java=90,python=80"
+info = re.search(r'\d+',str2)
+print info.group()  #100
+info = re.findall(r'\d+',str2)
+print info  #['100', '90', '80']
+print sum([int(x) for x in info])  #270 #列表解析
+
+str3 = "python video = 1000"
+info = re.sub(r'\d+',"1001",str3)  #sub是调用findall而不是search
+print info  #python video = 1001
+
+def add3(match):
+    val = match.group()
+    num = int(val)+3
+    return str(num)
+info = re.sub(r'\d+',add3,str3)
+print info  #python video = 1001
+
+str4 = "class:C C++ JAVA Python C#"
+info = re.split(r':| |,',str4)
+print info #['class', 'C', 'C++', 'JAVA', 'Python', 'C#']
+
+10、修饰符
+正则表达式可以包含一些可选标志修饰符来控制匹配的模式。修饰符被指定为一个可选的标志。多个标志可以通过按位 OR(|) 它们来指定。
+①re.I     使匹配对大小写不敏感
+②re.M     多行匹配，影响 ^和$
+③re.S     使.匹配包括换行在内的所有字符
+11、抓取网页中的图片到本地
+1：抓取网页
+2：获取图片地址
+3：抓取图片内容并保存到本地
+
+import urllib2,re
+req = urllib2.urlopen("http://www.imooc.com/course/list")
+buf = req.read()
+listurl = re.findall(r'http:.+\.jpg',buf)
+
+i = 0
+for url in listurl:
+    f = open(str(i)+".jpg","wb")
+    req = urllib2.urlopen(url)
+    buf = req.read()
+    f.write(buf)
+    i+=1
+    print I  #看看输出了多少个，此时也生成i个.jpg

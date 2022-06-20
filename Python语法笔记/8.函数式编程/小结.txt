@@ -1,0 +1,70 @@
+1.高阶函数:
+    即一个函数接收了另一个函数作为参数，这个函数就称之为高级函数！
+    例如:
+    def sum(x,y):
+        return x+y
+    a = [1,2,3]
+    b = [-1,-2,-3]
+    l = map(sum,a,b) #将两个列表进行相加
+
+2.匿名函数:
+    它的形式：lambda 参数: 表达式
+    调用方式:
+        1.lambda 参数: 表达式(参数)
+        2.func = lambda 参数: 表达式
+          func(参数)
+
+3.闭包:
+    即在定义的函数里面在定义一个函数
+    使用的时候先实例化出外层函数，然后在调用内层
+
+    def outer(a):
+    print('--')
+    def inner(b): #python会读取这个定义函数但不会执行
+        print(a+b)
+    return inner #需要把内层函数return给外层
+
+    out1 = outer('卷')
+    out2 = outer('废')
+    out1('王')
+    out2('物')
+
+    ----装饰器的基础
+
+4.装饰器:
+    def decorate(Ming):
+    print('我装饰了你! --> ' + Ming())
+
+    @decorate
+    def Ming():
+        return 'Ming'
+    即遇到装饰器python就会将定义的Ming函数传入decorate，进行执行
+    ...
+
+5.精辟:
+    函数可以被赋值给其他变量
+    函数可以被删除
+    可以在函数里面再定义函数
+    函数可以作为参数传递给另外一个函数
+    函数可以作为另一个函数的返回
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

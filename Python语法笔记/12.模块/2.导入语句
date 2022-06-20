@@ -1,0 +1,35 @@
+from..import 语句
+
+
+如果你希望直接把 argv 变量导入到你的程序中（以避免每次都要键入 sys.），那么你就可以使用 from sys import argv 语句。
+
+警告：原则上来说，还是要 避免 使用 from..import 语句，而是使用 import 语句。
+这是因为如果使用 import 语句的话，你的程序会避免出现命名冲突的问题，并且代码的可读性更高。
+
+例:
+
+from math import sqrt
+print("Square root of 16 is", sqrt(16))
+模块的 __name__
+每一个模块都有一个名称，在模块中我们可以通过判断语句来确定模块的名称。这在一种情形下特别有用：确定模块被导入了？还是在独立地运行。如之前提到过的，当模块第一次被导入的时候，模块的代码将被执行。我们可以通过这一点，让模块在被导入和独立运行时执行不同的操作。通过模块的 __name__ 属性可以实现这个功能。
+
+示例（另存为 module_using_name.py）：
+
+if __name__ == '__main__':
+    print('This program is being run by itself')
+else:
+    print('I am being imported from another module')
+输出：
+
+$ python module_using_name.py
+This program is being run by itself
+
+$ python
+>>> import module_using_name
+I am being imported from another module
+>>>
+代码是如何工作的？
+
+每一个 Python 模块都定义了各自的 __name__。
+如果其值为 '__main__'，这说明用户正在单独运行这个模块，这时我们可以进行合适的操作
+

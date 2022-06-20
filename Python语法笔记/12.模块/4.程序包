@@ -1,0 +1,32 @@
+程序包
+
+
+现在你一定已经开始观察组织程序的结构层次了。
+变量通常在函数的内部。
+全局变量和函数通常在模块的内部。
+如何组织模块呢？这就是程序包出场的时候了。
+
+程序包就是一个装满模块的文件夹，它有一个特殊的 __init__.py 文件，
+这个文件告诉 Python 这个文件夹是特别的，因为它装着 Python 的模块。
+
+让我们假设你想创建一个叫做 world 的程序包，它有很多子程序包 asia、africa 等。
+这些子程序包依次包含 india、madagascar 等模块。
+
+以下是一种组织文件夹的方式：
+
+- <some folder present in the sys.path>/
+    - world/
+        - __init__.py
+        - asia/
+            - __init__.py
+            - india/
+                - __init__.py
+                - foo.py
+        - africa/
+            - __init__.py
+            - madagascar/
+                - __init__.py
+                - bar.py
+程序包是分层组织模块的一种简便方式。
+你会在 标准库 中找到许多程序包的实例。
+

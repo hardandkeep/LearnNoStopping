@@ -1,0 +1,84 @@
+模块
+
+你已经看到了如何在你的程序中重复使用代码 —— 只需定义一次函数就可以对其重复调用了。
+如果你想在其他程序中复用你写的大量的函数时，怎么办？可能你已经猜到了，答案就是模块。
+
+编写模块的方式有很多，但是最简单的方式就是创建一个包含很多方法和变量并以 .py 为扩展的文件。
+
+另一种方法就是用编写 Python 解释器的语言来编写模块。
+例如，你可以用 C 语言 来写模块，在使用标准 Python 解释器中进行编译时，这些模块会从你的 Python 代码中调用。
+
+一个模块会被引入到一个程序来使用它的功能。这就是我们使用 Python 标准库的方法。首先，我们会了解如何使用标准库模块。
+
+例子（保存为 module_using_sys.py ）：
+
+import sys
+
+print('The command line arguments are:')
+for i in sys.argv:
+    print(i)
+
+print('\n\nThe PYTHONPATH is', sys.path, '\n')
+输出：
+
+$ python module_using_sys.py we are arguments    # 每个参数都由空格隔开
+The command line arguments are:
+module_using_sys.py
+we
+are
+arguments
+
+The PYTHONPATH is ['/tmp/py',
+# 这有很多条目，在这里没有全部显示
+'/Library/Python/2.7/site-packages',
+'/usr/local/lib/python2.7/site-packages']
+它是如何工作的：
+
+首先，我们利用 import 引入 sys 模块，这基本上会告诉 Python ，我们想使用这个模块。 
+sys 模块包含着与 Python 解释器和它的环境（即系统）有关的函数。
+
+当 Python 执行 import sys 语句时，它会查找 sys 模块。
+在这种情况下，它是一个内置模块，因此 Python 知道在哪里找到它。
+
+如果它不是一个编译模块（即用 Python 编写的模块），那么 Python 解释器会在它的 sys.path 变量中列出来的目录中寻找它。
+如果模块被找到，则运行该模块主体中的语句，这个模块就会被设为 可用 供你使用。 注意，初始化在我们 第一次 引入这个模块时就会完成。
+
+sys 模块中的 argv 变量可以通过点表示法，即 sys.argv 访问。它清晰地指出这个名字就是 sys 模块的一部分。
+这种访问方式的另一优点就是这个名字不会与你程序中的任何 argv 的变量发生冲突。
+
+sys.argv 这个变量就是一个字符串 列表 （列表会在 下一章 中详细介绍）。
+具体来说， sys.argv 包含 命令行参数 列表，即那些使用命令行传递给程序的参数。
+
+如果使用 IDE 编写和运行这些程序，请查找在菜单中为程序指定命令行参数的方法。
+
+当我们执行 python module_using_sys.py we are arguments 命令的时候，我们使用 python 命令行运行模块 module_using_sys.py。
+后面的字符串 we are arguments 被作为参数传递给模块。Python 会把这些参数储存在 sys.argv 变量里以供后续使用。
+
+记住，当前运行的模块名总储存在 sys.argv 列表的第一个元素中。
+所以执行以上语句后，sys.argv[0] 中存放着 'module_using_sys.py'，'we' 放在 sys.argv[1], 'are' 放在 sys.argv[2] 而 'arguments' 放在 sys.argv[3]。
+注意到 Python 中，数组索引从 0 开始计数而不是从 1 开始。
+
+sys.path 是模块导入时要搜索的目录列表。
+我们可以看到 sys.path 的第一个字符串是空的，空字符串意味着当前目录也是 sys.path 的一部分，这与 PYTHONPATH 环境变量是相同的。这意味着你可以直接从当前目录下导入模块。不然你还需要把你要导入的模块放到 sys.path 中的一个目录里。
+
+注意：当前目录指的是你的程序启动的目录。你可以通过执行 import os; print(os.getcwd())，来查看你的程序的当前目录。
+
+
+
+
+
+字节码文件 .pyc
+
+
+
+
+导入模块是一个相对而言开销较大的操作，因此，Python 试用了一些手段来使得导入模块的操作更加快速。
+其中一个方法，就是创建以 .pyc 为扩展名的 字节码 文件，它是一种中间形式，
+Python 会把程序代码转换成这样的形式（你还记得在 介绍章节 中说过 Python 是怎么运行的吗？）。
+当你下一次想要在另外一个程序代码中导入模块的时候，这个 .pyc 文件就很有用 —— 导入操作会很快完成，
+这是因为导入模块所必须的一部分操作已经被事先完成了。
+此外，这些字节码文件都是平台无关的。
+
+注意：这些 .pyc 文件一般会被创建在与它对应的 .py 文件相同的文件目录下。
+如果 Python 没有在该文件夹下写文件的权限，那么 .pyc 文件将不会被创建。
+

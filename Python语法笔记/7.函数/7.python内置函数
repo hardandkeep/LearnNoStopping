@@ -1,0 +1,803 @@
+
+abs：求数值的绝对值
+>>> abs(-2)
+2
+
+
+divmod：返回两个数值的商和余数
+>>> divmod(5,2)
+(2, 1)
+>> divmod(5.5,2)
+(2.0, 1.5)
+
+
+max：返回可迭代对象中的元素中的最大值或者所有参数的最大值
+>>> max(1,2,3) # 传入3个参数 取3个中较大者
+3
+>>> max('1234') # 传入1个可迭代对象，取其最大元素值
+'4'
+>>> max(-1,0) # 数值默认去数值较大者
+0
+>>> max(-1,0,key = abs) # 传入了求绝对值函数，则参数都会进行求绝对值后再取较大者
+-1
+
+
+min：返回可迭代对象中的元素中的最小值或者所有参数的最小值
+>>> min(1,2,3) # 传入3个参数 取3个中较小者
+1
+>>> min('1234') # 传入1个可迭代对象，取其最小元素值
+'1'
+>>> min(-1,-2) # 数值默认去数值较小者
+-2
+>>> min(-1,-2,key = abs)  # 传入了求绝对值函数，则参数都会进行求绝对值后再取较小者
+-1
+
+
+pow：返回两个数值的幂运算值或其与指定整数的模值
+>>> pow(2,3)
+>>> 2**3
+>>> pow(2,3,5)
+>>> pow(2,3)%5
+
+
+round：对浮点数进行四舍五入求值
+>>> round(1.1314926,1)
+1.1
+>>> round(1.1314926,5)
+1.13149
+
+
+sum：对元素类型是数值的可迭代对象中的每个元素求和\
+# 传入可迭代对象
+>>> sum((1,2,3,4))
+10
+# 元素类型必须是数值型
+>>> sum((1.5,2.5,3.5,4.5))
+12.0
+>>> sum((1,2,3,4),-10)
+0
+
+   
+
+
+#类型转换
+bool：根据传入的参数的逻辑值创建一个新的布尔值
+>>> bool() #未传入参数
+False
+>>> bool(0) #数值0、空序列等值为False
+False
+>>> bool(1)
+True
+
+
+int：根据传入的参数创建一个新的整数
+>>> int() #不传入参数时，得到结果0。
+0
+>>> int(3)
+3
+>>> int(3.6)
+3
+
+
+float：根据传入的参数创建一个新的浮点数
+>>> float() #不提供参数的时候，返回0.0
+0.0
+>>> float(3)
+3.0
+>>> float('3')
+3.0
+
+
+complex：根据传入参数创建一个新的复数
+>>> complex() #当两个参数都不提供时，返回复数 0j。
+0j
+>>> complex('1+2j') #传入字符串创建复数
+(1+2j)
+>>> complex(1,2) #传入数值创建复数
+(1+2j)
+
+
+str：返回一个对象的字符串表现形式(给用户)
+>>> str()
+''
+>>> str(None)
+'None'
+>>> str('abc')
+'abc'
+>>> str(123)
+'123'
+
+
+bytearray：根据传入的参数创建一个新的字节数组
+>>> bytearray('中文','utf-8')
+bytearray(b'\xe4\xb8\xad\xe6\x96\x87')
+bytes：根据传入的参数创建一个新的不可变字节数组
+>>> bytes('中文','utf-8')
+b'\xe4\xb8\xad\xe6\x96\x87'
+
+
+memoryview：根据传入的参数创建一个新的内存查看对象
+>>> v = memoryview(b'abcefg')
+>>> v[1]
+98
+>>> v[-1]
+103
+ord：返回Unicode字符对应的整数
+>>> ord('a')
+97
+chr：返回整数所对应的Unicode字符
+>>> chr(97) #参数类型为整数
+'a'
+bin：将整数转换成2进制字符串
+>>> bin(3) 
+'0b11'
+oct：将整数转化成8进制数字符串
+>>> oct(10)
+'0o12'
+hex：将整数转换成16进制字符串
+>>> hex(15)
+'0xf'
+
+
+tuple：根据传入的参数创建一个新的元组
+>>> tuple() #不传入参数，创建空元组
+()
+>>> tuple('121') #传入可迭代对象。使用其元素创建新的元组
+('1', '2', '1')
+
+
+list：根据传入的参数创建一个新的列表
+>>>list() # 不传入参数，创建空列表
+[] 
+>>> list('abcd') # 传入可迭代对象，使用其元素创建新的列表
+['a', 'b', 'c', 'd']
+
+
+dict：根据传入的参数创建一个新的字典
+>>> dict() # 不传入任何参数时，返回空字典。
+{}
+>>> dict(a = 1,b = 2) #  可以传入键值对创建字典。
+{'b': 2, 'a': 1}
+>>> dict(zip(['a','b'],[1,2])) # 可以传入映射函数创建字典。
+{'b': 2, 'a': 1}
+>>> dict((('a',1),('b',2))) # 可以传入可迭代对象创建字典。
+{'b': 2, 'a': 1}
+
+
+set：根据传入的参数创建一个新的集合
+>>>set() # 不传入参数，创建空集合
+set()
+>>> a = set(range(10)) # 传入可迭代对象，创建集合
+>>> a
+{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+frozenset：根据传入的参数创建一个新的不可变集合
+>>> a = frozenset(range(10))
+>>> a
+frozenset({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+
+
+enumerate：根据可迭代对象创建枚举对象
+>>> seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+>>> list(enumerate(seasons))
+[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+>>> list(enumerate(seasons, start=1)) #指定起始值
+[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+
+
+range：根据传入的参数创建一个新的range对象
+>>> a = range(10)
+>>> b = range(1,10)
+>>> c = range(1,10,3)
+>>> a,b,c # 分别输出a,b,c
+(range(0, 10), range(1, 10), range(1, 10, 3))
+>>> list(a),list(b),list(c) # 分别输出a,b,c的元素
+([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 4, 7])
+
+
+iter：根据传入的参数创建一个新的可迭代对象
+>>> a = iter('abcd') #字符串序列
+>>> a
+<str_iterator object at 0x03FB4FB0>
+>>> next(a)
+'a'
+>>> next(a)
+'b'
+>>> next(a)
+'c'
+>>> next(a)
+'d'
+>>> next(a)
+Traceback (most recent call last):
+  File "<pyshell#29>", line 1, in <module>
+    next(a)
+StopIteration
+
+
+slice：根据传入的参数创建一个新的切片对象
+>>> c1 = slice(5) # 定义c1
+>>> c1
+slice(None, 5, None)
+>>> c2 = slice(2,5) # 定义c2
+>>> c2
+slice(2, 5, None)
+>>> c3 = slice(1,10,3) # 定义c3
+>>> c3
+slice(1, 10, 3)
+
+--------------------------------------看到这
+super：根据传入的参数创建一个新的子类和父类关系的代理对象
+#定义父类A
+>>> class A(object):
+    def __init__(self):
+        print('A.__init__')
+
+#定义子类B，继承A
+>>> class B(A):
+    def __init__(self):
+        print('B.__init__')
+        super().__init__()
+
+#super调用父类方法
+>>> b = B()
+B.__init__
+A.__init__
+复制代码
+
+
+object：创建一个新的object对象
+>>> a = object()
+>>> a.name = 'kim' # 不能设置属性
+Traceback (most recent call last):
+  File "<pyshell#9>", line 1, in <module>
+    a.name = 'kim'
+AttributeError: 'object' object has no attribute 'name'
+ 
+
+ 
+
+#序列操作
+
+
+all：判断可迭代对象的每个元素是否都为True值
+复制代码
+>>> all([1,2]) #列表中每个元素逻辑值均为True，返回True
+True
+>>> all([0,1,2]) #列表中0的逻辑值为False，返回False
+False
+>>> all(()) #空元组
+True
+>>> all({}) #空字典
+True
+
+
+any：判断可迭代对象的元素是否有为True值的元素
+>>> any([0,1,2]) #列表元素有一个为True，则返回True
+True
+>>> any([0,0]) #列表元素全部为False，则返回False
+False
+>>> any([]) #空列表
+False
+>>> any({}) #空字典
+False
+
+
+filter：使用指定方法过滤可迭代对象的元素
+>>> a = list(range(1,10)) #定义序列
+>>> a
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> def if_odd(x): #定义奇数判断函数
+    return x%2==1
+
+>>> list(filter(if_odd,a)) #筛选序列中的奇数
+[1, 3, 5, 7, 9]
+
+
+map：使用指定方法去作用传入的每个可迭代对象的元素，生成新的可迭代对象
+>>> a = map(ord,'abcd')
+>>> a
+<map object at 0x03994E50>
+>>> list(a)
+[97, 98, 99, 100]
+
+
+next：返回可迭代对象中的下一个元素值
+>>> a = iter('abcd')
+>>> next(a)
+'a'
+>>> next(a)
+'b'
+>>> next(a)
+'c'
+>>> next(a)
+'d'
+>>> next(a)
+Traceback (most recent call last):
+  File "<pyshell#18>", line 1, in <module>
+    next(a)
+StopIteration
+
+#传入default参数后，如果可迭代对象还有元素没有返回，则依次返回其元素值，如果所有元素已经返回，则返回default指定的默认值而不抛出StopIteration 异常
+>>> next(a,'e')
+'e'
+>>> next(a,'e')
+'e'
+
+
+reversed：反转序列生成新的可迭代对象
+>>> a = reversed(range(10)) # 传入range对象
+>>> a # 类型变成迭代器
+<range_iterator object at 0x035634E8>
+>>> list(a)
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+
+
+sorted：对可迭代对象进行排序，返回一个新的列表
+>>> a = ['a','b','d','c','B','A']
+>>> a
+['a', 'b', 'd', 'c', 'B', 'A']
+
+>>> sorted(a) # 默认按字符ascii码排序
+['A', 'B', 'a', 'b', 'c', 'd']
+
+>>> sorted(a,key = str.lower) # 转换成小写后再排序，'a'和'A'值一样，'b'和'B'值一样
+['a', 'A', 'b', 'B', 'c', 'd']
+
+
+zip：聚合传入的每个迭代器中相同位置的元素，返回一个新的元组类型迭代器
+>>> x = [1,2,3] #长度3
+>>> y = [4,5,6,7,8] #长度5
+>>> list(zip(x,y)) # 取最小长度3
+[(1, 4), (2, 5), (3, 6)]
+ 
+
+
+
+#对象操作
+
+ 
+help：返回对象的帮助信息
+>>> help(str) 
+Help on class str in module builtins:
+
+class str(object)
+ |  str(object='') -> str
+ |  str(bytes_or_buffer[, encoding[, errors]]) -> str
+ |  
+ |  Create a new string object from the given object. If encoding or
+ |  errors is specified, then the object must expose a data buffer
+ |  that will be decoded using the given encoding and error handler.
+ |  Otherwise, returns the result of object.__str__() (if defined)
+ |  or repr(object).
+ |  encoding defaults to sys.getdefaultencoding().
+ |  errors defaults to 'strict'.
+ |  
+ |  Methods defined here:
+ |  
+ |  __add__(self, value, /)
+ |      Return self+value.
+ |  
+  ***************************
+
+
+dir：返回对象或者当前作用域内的属性列表
+>>> import math
+>>> math
+<module 'math' (built-in)>
+>>> dir(math)
+['__doc__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf', 'isclose', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'trunc']
+
+
+id：返回对象的唯一标识符
+>>> a = 'some text'
+>>> id(a)
+69228568
+hash：获取对象的哈希值
+>>> hash('good good study')
+1032709256
+
+type：返回对象的类型，或者根据传入的参数创建一个新的类型
+>>> type(1) # 返回对象的类型
+<class 'int'>
+#使用type函数创建类型D，含有属性InfoD
+>>> D = type('D',(A,B),dict(InfoD='some thing defined in D'))
+>>> d = D()
+>>> d.InfoD
+ 'some thing defined in D'
+
+
+len：返回对象的长度
+>>> len('abcd') # 字符串
+>>> len(bytes('abcd','utf-8')) # 字节数组
+>>> len((1,2,3,4)) # 元组
+>>> len([1,2,3,4]) # 列表
+>>> len(range(1,5)) # range对象
+>>> len({'a':1,'b':2,'c':3,'d':4}) # 字典
+>>> len({'a','b','c','d'}) # 集合
+>>> len(frozenset('abcd')) #不可变集合
+
+
+ascii：返回对象的可打印表字符串表现方式
+>>> ascii(1)
+'1'
+>>> ascii('&')
+"'&'"
+>>> ascii(9000000)
+'9000000'
+>>> ascii('中文') #非ascii字符
+"'\\u4e2d\\u6587'"
+
+
+format：格式化显示值
+#字符串可以提供的参数 's' None
+>>> format('some string','s')
+'some string'
+>>> format('some string')
+'some string'
+#整形数值可以提供的参数有 'b' 'c' 'd' 'o' 'x' 'X' 'n' None
+>>> format(3,'b') #转换成二进制
+'11'
+>>> format(97,'c') #转换unicode成字符
+'a'
+>>> format(11,'d') #转换成10进制
+'11'
+>>> format(11,'o') #转换成8进制
+'13'
+>>> format(11,'x') #转换成16进制 小写字母表示
+'b'
+>>> format(11,'X') #转换成16进制 大写字母表示
+'B'
+>>> format(11,'n') #和d一样
+'11'
+>>> format(11) #默认和d一样
+'11'
+
+
+#浮点数可以提供的参数有 'e' 'E' 'f' 'F' 'g' 'G' 'n' '%' None
+>>> format(314159267,'e') #科学计数法，默认保留6位小数
+'3.141593e+08'
+>>> format(314159267,'0.2e') #科学计数法，指定保留2位小数
+'3.14e+08'
+>>> format(314159267,'0.2E') #科学计数法，指定保留2位小数，采用大写E表示
+'3.14E+08'
+>>> format(314159267,'f') #小数点计数法，默认保留6位小数
+'314159267.000000'
+>>> format(3.14159267000,'f') #小数点计数法，默认保留6位小数
+'3.141593'
+>>> format(3.14159267000,'0.8f') #小数点计数法，指定保留8位小数
+'3.14159267'
+>>> format(3.14159267000,'0.10f') #小数点计数法，指定保留10位小数
+'3.1415926700'
+>>> format(3.14e+1000000,'F')  #小数点计数法，无穷大转换成大小字母
+'INF'
+
+
+#g的格式化比较特殊，假设p为格式中指定的保留小数位数，先尝试采用科学计数法格式化，得到幂指数exp，如果-4<=exp<p，则采用小数计数法，并保留p-1-exp位小数，否则按小数计数法计数，并按p-1保留小数位数
+>>> format(0.00003141566,'.1g') #p=1,exp=-5 ==》 -4<=exp<p不成立，按科学计数法计数，保留0位小数点
+'3e-05'
+>>> format(0.00003141566,'.2g') #p=1,exp=-5 ==》 -4<=exp<p不成立，按科学计数法计数，保留1位小数点
+'3.1e-05'
+>>> format(0.00003141566,'.3g') #p=1,exp=-5 ==》 -4<=exp<p不成立，按科学计数法计数，保留2位小数点
+'3.14e-05'
+>>> format(0.00003141566,'.3G') #p=1,exp=-5 ==》 -4<=exp<p不成立，按科学计数法计数，保留0位小数点，E使用大写
+'3.14E-05'
+>>> format(3.1415926777,'.1g') #p=1,exp=0 ==》 -4<=exp<p成立，按小数计数法计数，保留0位小数点
+'3'
+>>> format(3.1415926777,'.2g') #p=1,exp=0 ==》 -4<=exp<p成立，按小数计数法计数，保留1位小数点
+'3.1'
+>>> format(3.1415926777,'.3g') #p=1,exp=0 ==》 -4<=exp<p成立，按小数计数法计数，保留2位小数点
+'3.14'
+>>> format(0.00003141566,'.1n') #和g相同
+'3e-05'
+>>> format(0.00003141566,'.3n') #和g相同
+'3.14e-05'
+>>> format(0.00003141566) #和g相同
+'3.141566e-05'
+
+
+vars：返回当前作用域内的局部变量和其值组成的字典，或者返回对象的属性列表
+#作用于类实例
+>>> class A(object):
+    pass
+
+>>> a.__dict__
+{}
+>>> vars(a)
+{}
+>>> a.name = 'Kim'
+>>> a.__dict__
+{'name': 'Kim'}
+>>> vars(a)
+{'name': 'Kim'}
+
+ 
+
+
+#反射操作
+
+ 
+__import__：动态导入模块
+index = __import__('index')
+index.sayHello()
+isinstance：判断对象是否是类或者类型元组中任意类元素的实例
+>>> isinstance(1,int)
+True
+>>> isinstance(1,str)
+False
+>>> isinstance(1,(int,str))
+True
+
+
+issubclass：判断类是否是另外一个类或者类型元组中任意类元素的子类
+>>> issubclass(bool,int)
+True
+>>> issubclass(bool,str)
+False
+
+>>> issubclass(bool,(str,int))
+True
+
+
+hasattr：检查对象是否含有属性
+复制代码
+#定义类A
+>>> class Student:
+    def __init__(self,name):
+        self.name = name
+
+        
+>>> s = Student('Aim')
+>>> hasattr(s,'name') #a含有name属性
+True
+>>> hasattr(s,'age') #a不含有age属性
+False
+
+
+getattr：获取对象的属性值
+#定义类Student
+>>> class Student:
+    def __init__(self,name):
+        self.name = name
+
+>>> getattr(s,'name') #存在属性name
+'Aim'
+
+>>> getattr(s,'age',6) #不存在属性age，但提供了默认值，返回默认值
+
+>>> getattr(s,'age') #不存在属性age，未提供默认值，调用报错
+Traceback (most recent call last):
+  File "<pyshell#17>", line 1, in <module>
+    getattr(s,'age')
+AttributeError: 'Stduent' object has no attribute 'age'
+
+
+setattr：设置对象的属性值
+>>> class Student:
+    def __init__(self,name):
+        self.name = name
+
+        
+>>> a = Student('Kim')
+>>> a.name
+'Kim'
+>>> setattr(a,'name','Bob')
+>>> a.name
+'Bob'
+
+
+delattr：删除对象的属性
+#定义类A
+>>> class A:
+    def __init__(self,name):
+        self.name = name
+    def sayHello(self):
+        print('hello',self.name)
+
+#测试属性和方法
+>>> a.name
+'小麦'
+>>> a.sayHello()
+hello 小麦
+
+#删除属性
+>>> delattr(a,'name')
+>>> a.name
+Traceback (most recent call last):
+  File "<pyshell#47>", line 1, in <module>
+    a.name
+AttributeError: 'A' object has no attribute 'name'
+
+
+callable：检测对象是否可被调用
+>>> class B: #定义类B
+    def __call__(self):
+        print('instances are callable now.')
+
+        
+>>> callable(B) #类B是可调用对象
+True
+>>> b = B() #调用类B
+>>> callable(b) #实例b是可调用对象
+True
+>>> b() #调用实例b成功
+instances are callable now.
+
+
+ 
+
+#变量操作
+
+ 
+globals：返回当前作用域内的全局变量和其值组成的字典
+>>> globals()
+{'__spec__': None, '__package__': None, '__builtins__': <module 'builtins' (built-in)>, '__name__': '__main__', '__doc__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>}
+>>> a = 1
+>>> globals() #多了一个a
+{'__spec__': None, '__package__': None, '__builtins__': <module 'builtins' (built-in)>, 'a': 1, '__name__': '__main__', '__doc__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>}
+
+
+locals：返回当前作用域内的局部变量和其值组成的字典
+>>> def f():
+    print('before define a ')
+    print(locals()) #作用域内无变量
+    a = 1
+    print('after define a')
+    print(locals()) #作用域内有一个a变量，值为1
+
+    
+>>> f
+<function f at 0x03D40588>
+>>> f()
+before define a 
+{} 
+after define a
+{'a': 1}
+
+
+ 
+
+#交互操作
+
+ 
+print：向标准输出对象打印输出
+>>> print(1,2,3)
+1 2 3
+>>> print(1,2,3,sep = '+')
+1+2+3
+>>> print(1,2,3,sep = '+',end = '=?')
+1+2+3=?
+input：读取用户输入值
+>>> s = input('please input your name:')
+please input your name:Ain
+>>> s
+'Ain'
+ 
+
+#文件操作
+ 
+
+open：使用指定的模式和编码打开文件，返回文件读写对象
+# t为文本读写，b为二进制读写
+>>> a = open('test.txt','rt')
+>>> a.read()
+'some text'
+>>> a.close()
+ 
+
+#编译执行
+
+
+compile：将字符串编译为代码或者AST对象，使之能够通过exec语句来执行或者eval进行求值
+>>> #流程语句使用exec
+>>> code1 = 'for i in range(0,10): print (i)'
+>>> compile1 = compile(code1,'','exec')
+>>> exec (compile1)
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+>>> #简单求值表达式用eval
+>>> code2 = '1 + 2 + 3 + 4'
+>>> compile2 = compile(code2,'','eval')
+>>> eval(compile2)
+10
+eval：执行动态表达式求值
+>>> eval('1+2+3+4')
+10
+exec：执行动态语句块
+>>> exec('a=1+2') #执行语句
+>>> a
+3
+
+
+repr：返回一个对象的字符串表现形式(给解释器)
+>>> a = 'some text'
+>>> str(a)
+'some text'
+>>> repr(a)
+"'some text'"
+ 
+
+#装饰器
+
+ 
+
+property：标示属性的装饰器
+>>> class C:
+    def __init__(self):
+        self._name = ''
+    @property
+    def name(self):
+        """i'm the 'name' property."""
+        return self._name
+    @name.setter
+    def name(self,value):
+        if value is None:
+            raise RuntimeError('name can not be None')
+        else:
+            self._name = value
+    
+>>> c = C()
+
+>>> c.name # 访问属性
+''
+>>> c.name = None # 设置属性时进行验证
+Traceback (most recent call last):
+  File "<pyshell#84>", line 1, in <module>
+    c.name = None
+  File "<pyshell#81>", line 11, in name
+    raise RuntimeError('name can not be None')
+RuntimeError: name can not be None
+
+>>> c.name = 'Kim' # 设置属性
+>>> c.name # 访问属性
+'Kim'
+
+>>> del c.name # 删除属性，不提供deleter则不能删除
+Traceback (most recent call last):
+  File "<pyshell#87>", line 1, in <module>
+    del c.name
+AttributeError: can't delete attribute
+>>> c.name
+'Kim'
+
+
+classmethod：标示方法为类方法的装饰器
+>>> class C:
+    @classmethod
+    def f(cls,arg1):
+        print(cls)
+        print(arg1)
+>>> C.f('类对象调用类方法')
+<class '__main__.C'>
+类对象调用类方法
+>>> c = C()
+>>> c.f('类实例对象调用类方法')
+<class '__main__.C'>
+类实例对象调用类方法
+
+
+staticmethod：标示方法为静态方法的装饰器
+# 使用装饰器定义静态方法
+>>> class Student(object):
+    def __init__(self,name):
+        self.name = name
+    @staticmethod
+    def sayHello(lang):
+        print(lang)
+        if lang == 'en':
+            print('Welcome!')
+        else:
+            print('你好！')
+>>> Student.sayHello('en') #类调用,'en'传给了lang参数
+en
+Welcome!
+>>> b = Student('Kim')
+>>> b.sayHello('zh')  #类实例对象调用,'zh'传给了lang参数
+zh
+你好

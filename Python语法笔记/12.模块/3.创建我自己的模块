@@ -1,0 +1,114 @@
+创建你自己的模块
+创建你自己的模块还是很容易的，你从一开始就在做这件事！这是因为每一个 Python 程序都是一个模块。
+你只需要保证这个程序以 .py 作为扩展名就行了。下面这个例子将会说明这件事。
+
+例 (保存为 mymodule.py):
+
+def say_hi():
+    print('Hi, this is mymodule speaking.')
+
+__version__ = '0.1'
+上面这个是一个 模块 的例子。正如你所看见的这样，比起我们普通的 Python 程序，它并没有什么特别不一样的地方。
+我们接下来将看到我们如何在另一个 Python 程序中使用到这个模块。
+
+需要记住的是，这个模块的位置有两种选择：1、导入它的程序所处的文件夹下；2、sys.path 所列出的文件夹下。
+
+另一个模块 (保存为 mymodule_demo.py):
+
+import mymodule
+
+mymodule.say_hi()
+print('Version', mymodule.__version__)
+输出:
+
+$ python mymodule_demo.py
+Hi, this is mymodule speaking.
+Version 0.1
+它是如何工作的
+
+需要注意的是，我们仍然还是使用 . 符号来访问模块的成员。
+Python 能够很好地复用同一个符号来让 Python 自身具有一种独特的「Pythonic」感。
+从而这样一来我们就不需要不停地学习新的方法了。
+
+下面是一个你用 from..import 语法的版本（保存为 mymodule_demo2.py）
+
+from mymodule import say_hi, __version__
+
+say_hi()
+print('Version', __version__)
+mymodule_demo2.py 的输出和 mymodule_demo.py 是相同的。
+
+需要注意的是，如果导入 mymodule 的模块中已经被有一个 __version__ 名称被声明了的话，
+那么这里就会产生命名冲突。这种情况是很可能出现的，因为一种常见的实践方式就是对每一个模块都使用这个名称来声明它自己的版本号。
+因此，尽管 import 语句可能会让你的程序代码稍微有点冗长，但是我们更加推荐你使用它。
+
+你也可以使用：
+
+from mymodule import *
+这将会导入所有的诸如 say_hi 这样的公开名称（public names），但是不会导入 __version__，因为它以 2 个下划线作为前缀。
+
+警告：记住，你应该避免使用 * 导入，比如像 from mymodule import * 这样。
+
+Python 之禅
+
+Python 的指导原则之一，就是「显式优于隐式」。
+你可以运行 import this 来了解更多的相关内容。
+
+
+
+
+
+dir 函数
+
+
+内置的 dir() 函数能以列表的形式返回某个对象定义的一系列标识符。
+如果这个对象是个模块，返回的列表中会包含模块内部所有的函数、类和变量。
+
+这个函数接收一个可选的参数。当参数是模块名时，函数会返回对应模块的标识符列表。
+没有参数时则会返回当前模块的标识符列表。
+
+例子：
+
+$ python
+>>> import sys
+
+# 获取 sys 模块内所有属性的标识符
+>>> dir(sys)
+['__displayhook__', '__doc__',
+'argv', 'builtin_module_names',
+'version', 'version_info']
+# 这里只列出了部分输出
+
+# 获取当前模块内属性的标识符
+>>> dir()
+['__builtins__', '__doc__',
+'__name__', '__package__', 'sys']
+
+# 创建一个新的变量 'a'
+>>> a = 5
+
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__', 'sys', 'a']
+
+# 删除变量 'a'
+>>> del a
+
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__', 'sys']
+代码是如何工作的？
+
+首先我们用 dir 查看重要的 sys 模块。你可以看见这个模块包含的非常多的属性列表。
+
+接下来，我们直接无参数调用 dir 函数。默认地，它会返回当前模块的属性列表。
+注意到上面导入的 sys 模块也是列表的一部分。
+
+为了观察 dir 函数的行为，我们定义了一个变量 a，并给它随便赋了一个值，然后调用 dir 函数，我们可以看到列表中加入了同名的值。
+当我们通过 del 语句在当前模块中移除变量后，再次调用 dir 函数，可以发现输出列表也改变了，'a' 被移出了列表。
+
+关于 del 的一点注释：这行语句执行后用于 删除 一个变量或标识符。
+在执行了 del a 之后，你就再也不能访问变量 a 了，它就像从未存在过一样。
+
+注意 dir 函数对 任何 对象都有效。例如：dir(str) 会列出 str (String) 类的属性。
+
+还有一个 vars() 函数，它有时能给你对象的属性和它们的值，但这个函数并不总是有效。
+
